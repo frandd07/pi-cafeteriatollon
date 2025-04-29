@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, LogIn, UserPlus } from "lucide-react";
+import { Link } from "react-router-dom";
+import routes from "@/routes/routes";
 
 const Header = () => {
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -65,30 +67,22 @@ const Header = () => {
           </a>
 
           <nav className="hidden sm:flex items-center gap-4">
-            <a
-              href="#"
+            <Link
+              to={routes.login}
               className="flex items-center gap-2 bg-white/90 text-[#fa6a69] font-semibold px-4 py-2 rounded-lg hover:bg-white transition hover:shadow-md"
               aria-label="Iniciar sesión"
-              onClick={(e) => {
-                e.preventDefault();
-                handleLinkClick("login");
-              }}
             >
-              <LogIn size={18} />
-              <span>Iniciar sesión</span>
-            </a>
-            <a
-              href="#"
+              Iniciar sesión
+            </Link>
+
+            <Link
+              to={routes.register}
               className="flex items-center gap-2 bg-[#56b0de] text-white font-semibold px-4 py-2 rounded-lg hover:bg-[#4a99c5] transition hover:shadow-md"
               aria-label="Registrarse"
-              onClick={(e) => {
-                e.preventDefault();
-                handleLinkClick("register");
-              }}
             >
               <UserPlus size={18} />
               <span>Registrarse</span>
-            </a>
+            </Link>
           </nav>
 
           <button
@@ -110,28 +104,20 @@ const Header = () => {
         }`}
       >
         <nav className="container mx-auto px-4 flex flex-col gap-3">
-          <a
-            href="#"
+          <Link
+            to="/login"
             className="flex items-center justify-center gap-2 bg-white/90 text-[#fa6a69] font-semibold px-4 py-3 rounded-lg hover:bg-white transition"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLinkClick("login");
-            }}
           >
             <LogIn size={18} />
             <span>Iniciar sesión</span>
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/register"
             className="flex items-center justify-center gap-2 bg-[#56b0de] text-white font-semibold px-4 py-3 rounded-lg hover:bg-[#4a99c5] transition"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLinkClick("register");
-            }}
           >
             <UserPlus size={18} />
             <span>Registrarse</span>
-          </a>
+          </Link>
         </nav>
       </div>
     </header>
