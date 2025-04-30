@@ -4,12 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { IngredientePrecio } from "@/interfaces";
 import { useSeleccionarIngredientes } from "../hooks";
-
-interface Producto {
-  id: number;
-  nombre: string;
-  precio: number;
-}
+import { Producto } from "@/interfaces";
 
 interface Props {
   producto: Producto;

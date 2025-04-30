@@ -1,7 +1,7 @@
 import { Producto } from "@/interfaces";
 import toast from "react-hot-toast";
 
-const API_URL = "http://localhost:3001";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const fetchProductosActivos = async (): Promise<Producto[] | null> => {
   try {

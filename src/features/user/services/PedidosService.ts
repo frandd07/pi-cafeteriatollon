@@ -1,14 +1,7 @@
-const API_URL = "http://localhost:3001";
+const API_URL = import.meta.env.VITE_API_URL;
 
 import { IngredientePrecio, Recreo } from "@/interfaces";
-
-interface ProductoCarrito {
-  id: number;
-  nombre: string;
-  precio: number;
-  cantidad: number;
-  ingredientes?: IngredientePrecio[];
-}
+import { ProductoCarrito } from "@/interfaces";
 
 export const crearPedido = async (
   productos: ProductoCarrito[],
