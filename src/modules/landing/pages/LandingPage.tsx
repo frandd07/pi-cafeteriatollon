@@ -43,34 +43,27 @@ const LandingPage = () => {
       >
         <div className="absolute -left-10 top-1/3 w-32 h-32 bg-yellow-100 rounded-full opacity-40 animate-pulse"></div>
 
-        <div className="md:order-2 relative pr-6 lg:pr-20 xl:pr-32">
-          <img
-            src="/images/movil.png"
-            alt="App cafetería"
-            className="max-h-96 w-auto shadow-xl rounded-2xl border border-gray-100"
-          />
-        </div>
-
-        <div className="max-w-xl mt-12 md:mt-0 pl-6 lg:pl-20 xl:pl-32 text-white">
-          <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
+        {/* TEXTO */}
+        <div className="w-full md:w-1/2 px-6 md:px-20 xl:px-32 text-white">
+          <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight text-left">
             <span>Sumérgete en un nuevo mundo y...</span>
             <span className="block bg-white bg-clip-text text-transparent">
               PIDE TU DESAYUNO
             </span>
           </h2>
-          <p className="text-xl mb-8">
+          <p className="text-xl mb-8 text-left">
             Tu desayuno listo en segundos con nuestra app
           </p>
 
-          <div className="flex flex-col md:flex-row items-center gap-6">
+          <div className="w-full flex justify-start">
             <button
-              className={`w-full md:w-auto bg-white text-[#fa6a69] px-8 py-4 rounded-full font-extrabold text-lg hover:opacity-90 transition shadow-lg flex items-center gap-2 ${
+              className={`bg-white text-[#fa6a69] px-8 py-4 rounded-full font-extrabold text-lg hover:opacity-90 transition shadow-lg flex items-center gap-2 ${
                 hoveredButton === "discover-more" ? "scale-105" : ""
               }`}
               onMouseEnter={() => setHoveredButton("discover-more")}
               onMouseLeave={() => setHoveredButton(null)}
             >
-              ¡DESCUBRE MÁS!
+              ¡Descarga nuestra APP!
               <Gift
                 size={20}
                 className={`transition-transform duration-300 ${
@@ -78,8 +71,18 @@ const LandingPage = () => {
                 }`}
               />
             </button>
-            <div className="text-lg mt-4 md:mt-0">
-              <span className="font-bold">Muchos estudiantes</span> ya la usan
+          </div>
+        </div>
+
+        {/* MOCKUP */}
+        <div className="w-full md:w-1/2 flex justify-center items-center mt-12 md:mt-0 px-6">
+          <div className="relative p-4 rounded-3xl bg-gradient-to-br from-[#fa6a69] to-[#f43f5e]">
+            <div className="bg-white rounded-[2rem] p-4 w-[300px] h-[600px]">
+              <img
+                src="/images/movil.png"
+                alt="App cafetería"
+                className="w-full h-full object-contain"
+              />
             </div>
           </div>
         </div>
