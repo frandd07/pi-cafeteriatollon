@@ -4,10 +4,11 @@ import { useCarrito } from "../context";
 import toast from "react-hot-toast";
 
 import { crearPedido } from "../services";
+import { Recreo } from "@/interfaces";
 
 export const useCarritoCliente = () => {
   const { carrito, quitarProducto, vaciarCarrito } = useCarrito();
-  const [recreo, setRecreo] = useState<"primer" | "segundo">("primer");
+  const [recreo, setRecreo] = useState<Recreo>("primer");
 
   const total = carrito.reduce(
     (acc, producto) => acc + producto.precio * producto.cantidad,

@@ -1,6 +1,6 @@
 const API_URL = "http://localhost:3001";
 
-import { IngredientePrecio } from "@/interfaces";
+import { IngredientePrecio, Recreo } from "@/interfaces";
 
 interface ProductoCarrito {
   id: number;
@@ -12,7 +12,7 @@ interface ProductoCarrito {
 
 export const crearPedido = async (
   productos: ProductoCarrito[],
-  recreo: "primer" | "segundo"
+  recreo: Recreo
 ): Promise<number | null> => {
   const usuario_id = localStorage.getItem("userId");
   if (!usuario_id) throw new Error("Usuario no autenticado");

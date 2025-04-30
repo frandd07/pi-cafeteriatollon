@@ -17,3 +17,5 @@ export interface CarritoContextType {
   quitarProducto: (id: number) => void;
   vaciarCarrito: () => void;
 }
+
+export type Recreo = "primer" | "segundo" | "lo_antes_posible";

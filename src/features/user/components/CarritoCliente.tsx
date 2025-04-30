@@ -91,12 +91,15 @@ const CarritoCliente = () => {
               <select
                 value={recreo}
                 onChange={(e) =>
-                  setRecreo(e.target.value as "primer" | "segundo")
+                  setRecreo(
+                    e.target.value as "primer" | "segundo" | "lo_antes_posible"
+                  )
                 }
-                className="border border-gray-300 rounded px-3 py-2 cursor-pointer"
+                className="border border-gray-300 rounded px-3 py-2"
               >
                 <option value="primer">Primer recreo</option>
                 <option value="segundo">Segundo recreo</option>
+                <option value="lo_antes_posible">Lo antes posible</option>
               </select>
             </div>
 
