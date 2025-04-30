@@ -129,3 +129,63 @@ export const getProductosAdmin = async (
 
   res.json(data);
 };
+
+// Añadir producto a favoritos
+export const añadirAFavoritos = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { usuario_id, producto_id } = req.body;
+
+  const { error } = await supabase
+    .from("favoritos")
+    .insert([{ usuario_id, producto_id }]);
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  res.status(201).json({ success: true });
+};
+
+// Eliminar producto de favoritos
+export const eliminarDeFavoritos = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { usuario_id, producto_id } = req.body;
+
+  const { error } = await supabase
+    .from("favoritos")
+    .delete()
+    .eq("usuario_id", usuario_id)
+    .eq("producto_id", producto_id);
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  res.json({ success: true });
+};
+
+// Obtener productos favoritos de un usuario
+export const obtenerFavoritosUsuario = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { usuario_id } = req.params;
+
+  const { data, error } = await supabase
+    .from("favoritos")
+    .select("producto_id")
+    .eq("usuario_id", usuario_id);
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  res.json(data);
+};
