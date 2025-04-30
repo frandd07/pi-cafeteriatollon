@@ -46,25 +46,25 @@ const UserPage = () => {
           <div className="space-y-2">
             <button
               onClick={() => handleSelect("menu")}
-              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600"
+              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600 cursor-pointer"
             >
               🍽️ Menú
             </button>
             <button
               onClick={() => handleSelect("carrito")}
-              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600"
+              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600 cursor-pointer"
             >
               🛒 Carrito
             </button>
             <button
               onClick={() => handleSelect("pedidos")}
-              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600"
+              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600 cursor-pointer"
             >
               📦 Mis pedidos
             </button>
             <button
               onClick={() => handleSelect("perfil")}
-              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600"
+              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600 cursor-pointer"
             >
               👤 Perfil
             </button>

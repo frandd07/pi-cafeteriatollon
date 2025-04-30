@@ -75,7 +75,7 @@ const CarritoCliente = () => {
 
                 <button
                   onClick={() => quitarProducto(prod.id)}
-                  className="mt-4 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded transition"
+                  className="mt-4 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded transition cursor-pointer"
                 >
                   Quitar
                 </button>
@@ -93,7 +93,7 @@ const CarritoCliente = () => {
                 onChange={(e) =>
                   setRecreo(e.target.value as "primer" | "segundo")
                 }
-                className="border border-gray-300 rounded px-3 py-2"
+                className="border border-gray-300 rounded px-3 py-2 cursor-pointer"
               >
                 <option value="primer">Primer recreo</option>
                 <option value="segundo">Segundo recreo</option>
@@ -103,14 +103,14 @@ const CarritoCliente = () => {
             <div className="flex gap-3">
               <button
                 onClick={vaciarCarrito}
-                className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded transition"
+                className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded transition cursor-pointer"
               >
                 Vaciar carrito
               </button>
 
               <button
                 onClick={confirmarPedido}
-                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded transition"
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded transition cursor-pointer"
               >
                 Confirmar pedido
               </button>
