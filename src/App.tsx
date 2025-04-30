@@ -5,9 +5,11 @@ import { CarritoProvider } from "./features/user";
 import routes from "./routes/routes";
 import { UserPage } from "./features/user";
 import { Toaster } from "react-hot-toast";
+import { AdminPage } from "./features/admin/pages";
 
 // Rutas protegidas
 import ClienteRoute from "./components/ClienteRouter";
+import AdminRoute from "./components/AdminRoute";
 
 export default function App() {
   return (
@@ -26,6 +28,16 @@ export default function App() {
               <ClienteRoute>
                 <UserPage />
               </ClienteRoute>
+            }
+          />
+
+          {/* Ruta protegida para admin */}
+          <Route
+            path={routes.admin}
+            element={
+              <AdminRoute>
+                <AdminPage />
+              </AdminRoute>
             }
           />
         </Routes>

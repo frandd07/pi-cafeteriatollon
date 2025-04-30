@@ -3,3 +3,13 @@ export interface IngredientePrecio {
   nombre: string;
   precio_extra: number;
 }
+
+export interface Ingrediente {
+  id: number;
+  nombre: string;
+}
+
+export interface IngredienteAsignado {
+  id: number;
+  precioExtra: string;
+}
