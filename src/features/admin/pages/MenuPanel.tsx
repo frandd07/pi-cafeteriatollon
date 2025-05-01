@@ -109,7 +109,6 @@ const MenuPanel = () => {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between items-stretch sm:items-center mb-8 gap-2">
         <h2 className="text-2xl font-bold">Gestión del Menú</h2>
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
