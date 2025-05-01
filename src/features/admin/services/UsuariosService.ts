@@ -1,6 +1,6 @@
-import { Usuario } from "../hooks";
+import { Usuario } from "@/interfaces";
 
-const API_URL = "http://localhost:3001"; // Cambia en producción
+const API_URL = import.meta.env.VITE_API_URL;
 
 // ✅ Obtener usuarios filtrados por tipo
 export const getUsuariosFiltrados = async (

@@ -2,17 +2,7 @@ import { useEffect, useState } from "react";
 import { getUsuariosFiltrados, marcarUsuarioComoVerificado } from "../services";
 import toast from "react-hot-toast";
 import { eliminarUsuario as eliminarUsuarioService } from "../services/userService";
-
-export interface Usuario {
-  id: string;
-  nombre: string;
-  apellido1?: string;
-  apellido2?: string;
-  email: string;
-  tipo: string;
-  curso?: string;
-  verificado: boolean;
-}
+import { Usuario } from "@/interfaces";
 
 export const useUsuariosPanel = () => {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);

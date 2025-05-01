@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3001"; // Cambiar en producción
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const eliminarProducto = async (id: number): Promise<boolean> => {
   try {

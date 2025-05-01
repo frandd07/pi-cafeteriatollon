@@ -13,7 +13,7 @@ export const usePedidosAdmin = () => {
   const [ultimoTotal, setUltimoTotal] = useState(0);
   const [filtro, setFiltro] = useState<string>("todos");
   const [filtroNombre, setFiltroNombre] = useState<string>("");
-  const [filtroId, setFiltroId] = useState<string>(""); // Nuevo filtro por ID
+  const [filtroId, setFiltroId] = useState<string>("");
 
   const fetchPedidos = async () => {
     const data = await fetchPedidosDesdeSupabase();

@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3001"; // Cambiar en prod
+const API_URL = import.meta.env.VITE_API_URL;
 
 // ✅ Obtener todos los pedidos (admin)
 export const fetchPedidosDesdeSupabase = async () => {

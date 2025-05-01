@@ -13,3 +13,10 @@ export interface IngredienteAsignado {
   id: number;
   precioExtra: string;
 }
+
+export interface IngredientesModalProps {
+  productoId: number;
+  nombreProducto: string;
+  isOpen: boolean;
+  onClose: () => void;
+}

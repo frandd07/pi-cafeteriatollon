@@ -3,13 +3,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useIngredientesModal } from "../hooks";
-
-interface IngredientesModalProps {
-  productoId: number;
-  nombreProducto: string;
-  isOpen: boolean;
-  onClose: () => void;
-}
+import { IngredientesModalProps } from "@/interfaces";
 
 const IngredientesModal = ({
   productoId,

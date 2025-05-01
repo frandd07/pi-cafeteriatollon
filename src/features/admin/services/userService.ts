@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3001"; // o tu dominio en prod
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const aceptarUsuario = async (id: string) => {
   try {
@@ -59,8 +59,8 @@ export const eliminarUsuario = async (id: string): Promise<boolean> => {
       method: "DELETE",
     });
 
-    const data = await res.json(); // 👈 añade esto
-    console.log("DEBUG:", data); // 👈 log para ver el error real
+    const data = await res.json();
+    console.log("DEBUG:", data); //log para ver el error real
 
     if (!res.ok) throw new Error(data.error || "Error al eliminar usuario");
     return true;

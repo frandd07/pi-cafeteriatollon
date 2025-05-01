@@ -8,14 +8,7 @@ import { Trash2 } from "lucide-react";
 import { IngredientesModal } from "../components";
 import { Spinner } from "@/components/Spinner";
 import { eliminarProducto as eliminarProductoService } from "../services/ProductosAdminService";
-
-interface Producto {
-  id: number;
-  nombre: string;
-  precio: number;
-  imagen?: string;
-  habilitado: boolean;
-}
+import { Producto } from "@/interfaces";
 
 const MenuPanel = () => {
   const [productos, setProductos] = useState<Producto[]>([]);

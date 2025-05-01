@@ -3,5 +3,5 @@ export interface Producto {
   nombre: string;
   precio: number;
   imagen?: string;
-  habilitado?: boolean;
+  habilitado: boolean;
 }
