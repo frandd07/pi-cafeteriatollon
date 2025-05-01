@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { getIngredientesPorProducto } from "../services";
+import { getIngredientes } from "../services";
 
-import { IngredientePrecio } from "@/interfaces";
+import { Ingrediente } from "@/interfaces";
 
 export const useSeleccionarIngredientes = (
   productoId: number,
   isOpen: boolean
 ) => {
-  const [ingredientes, setIngredientes] = useState<IngredientePrecio[]>([]);
+  const [ingredientes, setIngredientes] = useState<Ingrediente[]>([]);
   const [seleccionados, setSeleccionados] = useState<number[]>([]);
 
   const fetchIngredientes = async () => {
-    const data = await getIngredientesPorProducto(productoId);
+    const data = await getIngredientes();
     setIngredientes(data);
-    setSeleccionados([]);
+    setSeleccionados([]); // reset al abrir
   };
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const useSeleccionarIngredientes = (
     return precioBase + extra;
   };
 
-  const getIngredientesSeleccionados = (): IngredientePrecio[] => {
+  const getIngredientesSeleccionados = (): Ingrediente[] => {
     return ingredientes.filter((i) => seleccionados.includes(i.id));
   };
 

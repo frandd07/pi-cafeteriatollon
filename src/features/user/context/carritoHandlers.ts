@@ -7,13 +7,24 @@ export function createHandlers(
 ): CarritoContextType {
   const añadirProducto = (producto: ProductoCarrito) => {
     setCarrito((prev) => {
-      const existe = prev.find((p) => p.id === producto.id);
+      const existe = prev.find(
+        (p) =>
+          p.id === producto.id &&
+          JSON.stringify(p.ingredientes) ===
+            JSON.stringify(producto.ingredientes)
+      );
+
       return existe
         ? prev.map((p) =>
-            p.id === producto.id ? { ...p, cantidad: p.cantidad + 1 } : p
+            p.id === producto.id &&
+            JSON.stringify(p.ingredientes) ===
+              JSON.stringify(producto.ingredientes)
+              ? { ...p, cantidad: p.cantidad + 1 }
+              : p
           )
         : [...prev, { ...producto, cantidad: 1 }];
     });
+
     toast.success(`"${producto.nombre}" añadido al carrito`);
   };
 

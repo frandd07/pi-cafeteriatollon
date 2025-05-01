@@ -68,11 +68,26 @@ export const crearPedido = async (
 
       // Ingredientes
       if (producto.ingredientes?.length) {
-        const detalleIngredientes = producto.ingredientes.map((ing: any) => ({
-          detalle_pedido_id: detallePedido.id,
-          ingrediente_id: ing.id,
-          precio_extra: ing.precio_extra,
-        }));
+        const idsIngredientes = producto.ingredientes.map((ing: any) => ing.id);
+
+        const { data: ingredientesDB, error: ingError } = await supabase
+          .from("ingredientes")
+          .select("id, precio_extra")
+          .in("id", idsIngredientes);
+
+        if (ingError) {
+          res.status(500).json({ error: ingError.message });
+          return;
+        }
+
+        const detalleIngredientes = producto.ingredientes.map((ing: any) => {
+          const ingDB = ingredientesDB.find((i) => i.id === ing.id);
+          return {
+            detalle_pedido_id: detallePedido.id,
+            ingrediente_id: ing.id,
+            precio_extra: ingDB?.precio_extra ?? 0, // Fallback si no lo encuentra
+          };
+        });
 
         const { error: errorIng } = await supabase
           .from("detalle_ingrediente")

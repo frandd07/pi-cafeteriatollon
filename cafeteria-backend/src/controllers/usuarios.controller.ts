@@ -79,3 +79,32 @@ export const rechazarUsuario = async (
   res.json({ success: true });
   return;
 };
+
+// Eliminar usuario
+export const eliminarUsuario = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+
+  // 1. Borrar de Supabase Auth directamente
+  const { error: authError } = await supabase.auth.admin.deleteUser(id);
+  if (authError) {
+    console.error("Error al eliminar en Auth:", authError.message);
+    res.status(500).json({ error: "Error al eliminar en Auth" });
+    return;
+  }
+
+  // 2. Borrar de la tabla 'usuarios' (el id es el mismo UUID)
+  const { error: deleteError } = await supabase
+    .from("usuarios")
+    .delete()
+    .eq("id", id);
+
+  if (deleteError) {
+    res.status(500).json({ error: "Error al eliminar de la tabla usuarios" });
+    return;
+  }
+
+  res.status(200).json({ success: true });
+};

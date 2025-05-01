@@ -68,10 +68,13 @@ export const getIngredientesProducto = async (
     .select(
       `
       ingrediente_id,
-      precio_extra,
-      ingredientes ( nombre )
+      ingredientes (
+        nombre,
+        precio_extra
+      )
     `
     )
+
     .eq("producto_id", id);
 
   if (error) {
@@ -95,8 +98,7 @@ export const asignarIngredientes = async (
   if (ingredientes.length > 0) {
     const inserts = ingredientes.map((i: any) => ({
       producto_id: parseInt(id),
-      ingrediente_id: i.id,
-      precio_extra: parseFloat(i.precioExtra),
+      ingrediente_id: i.ingrediente_id,
     }));
 
     const { error } = await supabase
@@ -188,4 +190,20 @@ export const obtenerFavoritosUsuario = async (
   }
 
   res.json(data);
+};
+
+export const eliminarProducto = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+
+  const { error } = await supabase.from("productos").delete().eq("id", id);
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  res.status(200).json({ success: true });
 };

@@ -10,10 +10,17 @@ export const crearPedido = async (
   const usuario_id = localStorage.getItem("userId");
   if (!usuario_id) throw new Error("Usuario no autenticado");
 
+  const productosLimpios = productos.map((p) => ({
+    id: p.id,
+    precio: p.precio,
+    cantidad: p.cantidad,
+    ingredientes: p.ingredientes?.map((i) => ({ id: i.id })) ?? [],
+  }));
+
   const res = await fetch(`${API_URL}/pedidos`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ productos, recreo, usuario_id }),
+    body: JSON.stringify({ productos: productosLimpios, recreo, usuario_id }),
   });
 
   const data = await res.json();
