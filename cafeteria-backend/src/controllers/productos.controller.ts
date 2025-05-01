@@ -189,3 +189,19 @@ export const obtenerFavoritosUsuario = async (
 
   res.json(data);
 };
+
+export const eliminarProducto = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+
+  const { error } = await supabase.from("productos").delete().eq("id", id);
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  res.status(200).json({ success: true });
+};
