@@ -13,6 +13,7 @@ export const usePedidosAdmin = () => {
   const [ultimoTotal, setUltimoTotal] = useState(0);
   const [filtro, setFiltro] = useState<string>("todos");
   const [filtroNombre, setFiltroNombre] = useState<string>("");
+  const [filtroId, setFiltroId] = useState<string>(""); // Nuevo filtro por ID
 
   const fetchPedidos = async () => {
     const data = await fetchPedidosDesdeSupabase();
@@ -67,7 +68,11 @@ export const usePedidosAdmin = () => {
     const nombreCompleto = `${pedido.usuarios?.nombre || ""} ${
       pedido.usuarios?.apellido1 || ""
     } ${pedido.usuarios?.apellido2 || ""}`.toLowerCase();
-    return nombreCompleto.includes(filtroNombre.toLowerCase());
+
+    const coincideNombre = nombreCompleto.includes(filtroNombre.toLowerCase());
+    const coincideId = pedido.id.toString().includes(filtroId);
+
+    return coincideNombre && coincideId;
   });
 
   return {
@@ -78,6 +83,8 @@ export const usePedidosAdmin = () => {
     setFiltro,
     filtroNombre,
     setFiltroNombre,
+    filtroId,
+    setFiltroId,
     actualizarEstado,
     togglePagado,
     estados,

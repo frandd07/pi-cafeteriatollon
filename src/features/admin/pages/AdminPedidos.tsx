@@ -12,6 +12,8 @@ const AdminPedidos = () => {
     setFiltro,
     filtroNombre,
     setFiltroNombre,
+    filtroId,
+    setFiltroId,
     actualizarEstado,
     togglePagado,
     estados,
@@ -46,7 +48,7 @@ const AdminPedidos = () => {
             {estados.map((estado) => (
               <button
                 key={estado}
-                className={`px-4 py-2 text-sm rounded-lg transition-all duration-200 flex items-center ${
+                className={`cursor-pointer px-4 py-2 text-sm rounded-lg transition-all duration-200 flex items-center ${
                   filtro === estado
                     ? "bg-blue-600 text-white shadow-md"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -56,7 +58,7 @@ const AdminPedidos = () => {
                 {estado === "pendiente" && "⏳ "}
                 {estado === "aceptado" && "✅ "}
                 {estado === "listo" && "📦 "}
-                {estado === "recogido" && "🛍️ "}
+                {estado === "recogido" && "🛕️ "}
                 {estado === "rechazado" && "❌ "}
                 {estado.charAt(0).toUpperCase() + estado.slice(1)}
                 {filtro === estado && (
@@ -68,19 +70,34 @@ const AdminPedidos = () => {
             ))}
           </div>
         </div>
-        {/* Filtro por nombre */}
+
+        {/* Filtros por nombre e ID */}
         <div className="bg-white rounded-xl shadow-md p-5 mb-8">
-          <div className="mb-4">
-            <h3 className="text-lg font-medium text-gray-700 mb-3">
-              Buscar por nombre
-            </h3>
-            <input
-              type="text"
-              value={filtroNombre}
-              onChange={(e) => setFiltroNombre(e.target.value)}
-              placeholder="Introduce el nombre o apellidos..."
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h3 className="text-lg font-medium text-gray-700 mb-3">
+                Buscar por nombre
+              </h3>
+              <input
+                type="text"
+                value={filtroNombre}
+                onChange={(e) => setFiltroNombre(e.target.value)}
+                placeholder="Introduce el nombre o apellidos..."
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <h3 className="text-lg font-medium text-gray-700 mb-3">
+                Buscar por número de pedido
+              </h3>
+              <input
+                type="text"
+                value={filtroId}
+                onChange={(e) => setFiltroId(e.target.value)}
+                placeholder="Introduce el ID del pedido..."
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
           </div>
         </div>
       </div>
