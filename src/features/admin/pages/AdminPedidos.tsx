@@ -310,7 +310,7 @@ const AdminPedidos = () => {
                     {pedido.estado === "aceptado" && (
                       <button
                         onClick={() => actualizarEstado(pedido.id, "listo")}
-                        className="px-4 py-2 text-sm bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-sm transition duration-150 flex items-center"
+                        className="cursor-pointer px-4 py-2 text-sm bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-sm transition duration-150 flex items-center"
                       >
                         <span className="mr-1">📦</span> Marcar como listo
                       </button>
@@ -318,7 +318,7 @@ const AdminPedidos = () => {
                     {pedido.estado === "listo" && pedido.pagado && (
                       <button
                         onClick={() => actualizarEstado(pedido.id, "recogido")}
-                        className="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow-sm transition duration-150 flex items-center"
+                        className="cursor-pointer px-4 py-2 text-sm bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow-sm transition duration-150 flex items-center"
                       >
                         <span className="mr-1">🛍️</span> Marcar como recogido
                       </button>
