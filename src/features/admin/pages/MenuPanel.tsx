@@ -110,18 +110,18 @@ const MenuPanel = () => {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       {/* Header */}
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between items-stretch sm:items-center mb-8 gap-2">
         <h2 className="text-2xl font-bold">Gestión del Menú</h2>
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
           <button
             onClick={() => setCrearProductoOpen(true)}
-            className="cursor-pointer bg-yellow-400 hover:bg-yellow-500 px-5 py-2.5 rounded shadow text-gray-900 flex items-center gap-2"
+            className="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 px-5 py-2.5 rounded shadow text-gray-900 flex items-center justify-center sm:justify-start gap-2"
           >
             Añadir producto
           </button>
           <button
             onClick={() => setGestionarIngOpen(true)}
-            className="cursor-pointer bg-purple-500 hover:bg-purple-600 px-5 py-2.5 rounded shadow text-white flex items-center gap-2"
+            className="w-full sm:w-auto bg-purple-500 hover:bg-purple-600 px-5 py-2.5 rounded shadow text-white flex items-center justify-center sm:justify-start gap-2"
           >
             Gestionar ingredientes
           </button>
