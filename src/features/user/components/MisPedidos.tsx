@@ -173,7 +173,7 @@ const MisPedidos = () => {
                   <div className="p-4 flex justify-end">
                     <button
                       onClick={() => eliminarPedido(pedido.id)}
-                      className="px-4 py-2 text-sm bg-red-100 text-red-700 border border-red-300 rounded-lg hover:bg-red-200"
+                      className="cursor-pointer px-4 py-2 text-sm bg-red-100 text-red-700 border border-red-300 rounded-lg hover:bg-red-200"
                     >
                       Eliminar
                     </button>
