@@ -19,6 +19,12 @@ const AdminPedidos = () => {
     estados,
   } = usePedidosAdmin();
 
+  const recreoLabels: Record<string, string> = {
+    primer: "Primer recreo",
+    segundo: "Segundo recreo",
+    lo_antes_posible: "Lo antes posible",
+  };
+
   if (loading) return <Spinner />;
   return (
     <div className="max-w-6xl mx-auto py-8 px-4">
@@ -200,7 +206,7 @@ const AdminPedidos = () => {
                           : "Sin tipo"}
                       </p>
                       <p className="text-sm text-gray-600">
-                        Recreo: {pedido.recreo}
+                        Recreo: {recreoLabels[pedido.recreo] || pedido.recreo}
                       </p>
                     </div>
 
@@ -284,7 +290,7 @@ const AdminPedidos = () => {
                           onClick={() =>
                             actualizarEstado(pedido.id, "aceptado")
                           }
-                          className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm transition duration-150 flex items-center"
+                          className="cursor-pointer px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm transition duration-150 flex items-center"
                         >
                           <span className="mr-1">✅</span> Aceptar
                         </button>
@@ -292,7 +298,7 @@ const AdminPedidos = () => {
                           onClick={() =>
                             actualizarEstado(pedido.id, "rechazado")
                           }
-                          className="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-sm transition duration-150 flex items-center"
+                          className="cursor-pointer px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-sm transition duration-150 flex items-center"
                         >
                           <span className="mr-1">❌</span> Rechazar
                         </button>
