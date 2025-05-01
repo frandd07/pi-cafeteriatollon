@@ -68,10 +68,13 @@ export const getIngredientesProducto = async (
     .select(
       `
       ingrediente_id,
-      precio_extra,
-      ingredientes ( nombre )
+      ingredientes (
+        nombre,
+        precio_extra
+      )
     `
     )
+
     .eq("producto_id", id);
 
   if (error) {
@@ -95,8 +98,7 @@ export const asignarIngredientes = async (
   if (ingredientes.length > 0) {
     const inserts = ingredientes.map((i: any) => ({
       producto_id: parseInt(id),
-      ingrediente_id: i.id,
-      precio_extra: parseFloat(i.precioExtra),
+      ingrediente_id: i.ingrediente_id,
     }));
 
     const { error } = await supabase

@@ -4,7 +4,7 @@ export interface ProductoCarrito {
   precio: number;
   imagen?: string;
   cantidad: number;
-  ingredientes?: {
+  ingredientes: {
     id: number;
     nombre: string;
     precio_extra: number;

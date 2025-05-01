@@ -24,9 +24,12 @@ export const crearIngrediente = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { nombre } = req.body;
+  const { nombre, precio_extra } = req.body;
 
-  const { error } = await supabase.from("ingredientes").insert({ nombre });
+  const { error } = await supabase
+    .from("ingredientes")
+    .insert([{ nombre, precio_extra }]);
+
   if (error) {
     res.status(500).json({ error: error.message });
     return;
@@ -34,4 +37,24 @@ export const crearIngrediente = async (
 
   res.status(201).json({ success: true });
   return;
+};
+
+export const actualizarIngrediente = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+  const { nombre, precio_extra } = req.body;
+
+  const { error } = await supabase
+    .from("ingredientes")
+    .update({ nombre, precio_extra })
+    .eq("id", id);
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  res.json({ success: true });
 };

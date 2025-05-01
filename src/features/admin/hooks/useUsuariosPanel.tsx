@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUsuariosFiltrados, marcarUsuarioComoVerificado } from "../services";
 import toast from "react-hot-toast";
-import { eliminarUsuario as eliminarUsuarioService } from "../services/userService";
+import { eliminarUsuario as eliminarUsuarioService } from "../services/UsuariosService";
 import { Usuario } from "@/interfaces";
 
 export const useUsuariosPanel = () => {
