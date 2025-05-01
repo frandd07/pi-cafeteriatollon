@@ -48,21 +48,38 @@ const AdminPage = () => {
           } md:translate-x-0`}
         >
           <div className="space-y-2">
+            {/* Botón para 'Usuarios' */}
             <button
               onClick={() => handleSelect("usuarios")}
-              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600 cursor-pointer"
+              className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
+                seccion === "usuarios"
+                  ? "bg-[#ff6c6c] text-white"
+                  : "bg-gray-100 hover:bg-[#ff9c9c]"
+              }`}
             >
               Usuarios
             </button>
+
+            {/* Botón para 'Menú' */}
             <button
               onClick={() => handleSelect("menu")}
-              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600 cursor-pointer"
+              className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
+                seccion === "menu"
+                  ? "bg-[#ff6c6c] text-white"
+                  : "hover:bg-[#ff9c9c]"
+              }`}
             >
               Menú
             </button>
+
+            {/* Botón para 'Pedidos' */}
             <button
               onClick={() => handleSelect("pedidos")}
-              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600 cursor-pointer"
+              className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
+                seccion === "pedidos"
+                  ? "bg-[#ff6c6c] text-white"
+                  : "hover:bg-[#ff9c9c]"
+              }`}
             >
               Pedidos
             </button>
