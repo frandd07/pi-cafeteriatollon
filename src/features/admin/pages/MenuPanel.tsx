@@ -4,8 +4,10 @@ import { Fragment, useEffect, useState } from "react";
 import { supabase } from "@/supabaseClient";
 import { Dialog, Transition } from "@headlessui/react";
 import toast from "react-hot-toast";
+import { Trash2 } from "lucide-react";
 import { IngredientesModal } from "../components";
 import { Spinner } from "@/components/Spinner";
+import { eliminarProducto as eliminarProductoService } from "../services/ProductosAdminService";
 
 interface Producto {
   id: number;
@@ -59,6 +61,40 @@ const MenuPanel = () => {
     }
   };
 
+  const eliminarProducto = (id: number) => {
+    toast.custom((t) => (
+      <div className="bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-2 w-80">
+        <p className="font-medium text-gray-800">¿Eliminar producto?</p>
+        <p className="text-sm text-gray-500">
+          Esta acción no se puede deshacer.
+        </p>
+        <div className="flex justify-end gap-2 mt-3">
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={async () => {
+              const success = await eliminarProductoService(id);
+              toast.dismiss(t.id);
+              if (success) {
+                toast.success("Producto eliminado correctamente");
+                fetchProductos();
+              } else {
+                toast.error("Error al eliminar el producto");
+              }
+            }}
+            className="px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    ));
+  };
+
   const crearProducto = async () => {
     const { nombre, precio, imagen } = nuevoProducto;
 
@@ -97,22 +133,8 @@ const MenuPanel = () => {
         <h2 className="text-2xl font-bold text-gray-800">Gestión del Menú</h2>
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-5 py-2.5 rounded-md font-medium shadow-sm transition duration-150 flex items-center gap-2"
+          className="cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-5 py-2.5 rounded-md font-medium shadow-sm transition duration-150 flex items-center gap-2"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
           Añadir producto
         </button>
       </div>
@@ -138,39 +160,26 @@ const MenuPanel = () => {
                 />
               ) : (
                 <div className="h-48 w-full bg-gray-200 flex items-center justify-center text-gray-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="48"
-                    height="48"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect
-                      x="3"
-                      y="3"
-                      width="18"
-                      height="18"
-                      rx="2"
-                      ry="2"
-                    ></rect>
-                    <circle cx="9" cy="9" r="2"></circle>
-                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
-                  </svg>
+                  Imagen no disponible
                 </div>
               )}
-              <div
-                className={`absolute top-3 right-3 px-2 py-1 rounded-full text-xs font-medium ${
-                  prod.habilitado
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800"
-                }`}
-              >
-                {prod.habilitado ? "Activo" : "Inactivo"}
+              <div className="absolute top-3 left-3 flex items-center gap-2">
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    prod.habilitado
+                      ? "bg-green-100 text-green-800"
+                      : "bg-red-100 text-red-800"
+                  }`}
+                >
+                  {prod.habilitado ? "Activo" : "Inactivo"}
+                </span>
               </div>
+              <button
+                onClick={() => eliminarProducto(prod.id)}
+                className="cursor-pointer absolute top-3 right-3 p-1 bg-red-100 hover:bg-red-200 text-red-600 rounded-full"
+              >
+                <Trash2 size={16} />
+              </button>
             </div>
 
             <div className="p-4 flex-grow">
@@ -185,7 +194,7 @@ const MenuPanel = () => {
             <div className="px-4 pb-4 space-y-2">
               <button
                 onClick={() => toggleHabilitado(prod.id, prod.habilitado)}
-                className={`w-full px-4 py-2 rounded-md text-white font-medium transition-colors ${
+                className={` cursor-pointer w-full px-4 py-2 rounded-md text-white font-medium transition-colors ${
                   prod.habilitado
                     ? "bg-red-500 hover:bg-red-600"
                     : "bg-green-500 hover:bg-green-600"
@@ -198,21 +207,8 @@ const MenuPanel = () => {
                   setIngredientesProductoId(prod.id);
                   setIngredientesProductoNombre(prod.nombre);
                 }}
-                className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md transition-colors flex items-center justify-center gap-2"
+                className="cursor-pointer w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md transition-colors flex items-center justify-center gap-2"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 2v20M4.93 4.93l14.14 14.14M20 12H4"></path>
-                </svg>
                 Editar ingredientes
               </button>
             </div>
@@ -220,11 +216,11 @@ const MenuPanel = () => {
         ))}
       </div>
 
-      {/* Modal de creación */}
+      {/* Modal de creación y modal de ingredientes se mantienen igual */}
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-10"
+          className="relative z-50"
           onClose={() => setIsOpen(false)}
         >
           <Transition.Child
@@ -314,13 +310,13 @@ const MenuPanel = () => {
                   <div className="mt-8 flex justify-end gap-3">
                     <button
                       onClick={() => setIsOpen(false)}
-                      className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md font-medium transition-colors"
+                      className="cursor-pointer px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md font-medium transition-colors"
                     >
                       Cancelar
                     </button>
                     <button
                       onClick={crearProducto}
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors"
+                      className="cursor-pointer px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors"
                     >
                       Crear producto
                     </button>

@@ -34,7 +34,7 @@ const IngredientesModal = ({
     <>
       {/* Modal principal */}
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-20" onClose={onClose}>
+        <Dialog as="div" className="relative z-50" onClose={onClose}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -44,7 +44,7 @@ const IngredientesModal = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
@@ -69,7 +69,7 @@ const IngredientesModal = ({
                     </h4>
                     <button
                       onClick={() => setCrearModalAbierto(true)}
-                      className="text-sm text-blue-600 underline"
+                      className="cursor-pointer text-sm text-blue-600 underline"
                     >
                       ➕ Nuevo ingrediente
                     </button>
@@ -79,7 +79,10 @@ const IngredientesModal = ({
                     {ingredientes.map((ing) => {
                       const sel = seleccionados.find((i) => i.id === ing.id);
                       return (
-                        <div key={ing.id} className="flex items-center gap-2">
+                        <div
+                          key={ing.id}
+                          className="cursor-pointer flex items-center gap-2"
+                        >
                           <input
                             type="checkbox"
                             checked={!!sel}
@@ -106,13 +109,13 @@ const IngredientesModal = ({
                   <div className="mt-6 flex justify-end gap-2">
                     <button
                       onClick={onClose}
-                      className="px-4 py-2 bg-gray-300 rounded"
+                      className="cursor-pointer px-4 py-2 bg-gray-300 rounded"
                     >
                       Cancelar
                     </button>
                     <button
                       onClick={() => guardar(onClose)}
-                      className="px-4 py-2 bg-green-600 text-white rounded"
+                      className="cursor-pointer px-4 py-2 bg-green-600 text-white rounded"
                     >
                       Guardar
                     </button>
@@ -128,7 +131,7 @@ const IngredientesModal = ({
       <Transition appear show={crearModalAbierto} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-30"
+          className="relative z-50"
           onClose={() => setCrearModalAbierto(false)}
         >
           <Transition.Child
@@ -140,7 +143,7 @@ const IngredientesModal = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
