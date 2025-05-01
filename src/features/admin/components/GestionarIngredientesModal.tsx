@@ -9,7 +9,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { toast as toaster } from "react-hot-toast";
 import { Ingrediente } from "@/interfaces";
-import { TrashIcon } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 interface Props {
   isOpen: boolean;
@@ -213,7 +213,10 @@ export default function GestionarIngredientesModal({ isOpen, onClose }: Props) {
                         className="p-1 hover:bg-red-100 rounded"
                         title="Eliminar ingrediente"
                       >
-                        <TrashIcon size={16} className="text-red-600" />
+                        <Trash2
+                          size={16}
+                          className="cursor-pointer text-red-600"
+                        />
                       </button>
                     </div>
                   ))}
@@ -259,55 +262,59 @@ export default function GestionarIngredientesModal({ isOpen, onClose }: Props) {
             <div className="fixed inset-0 bg-black" aria-hidden="true" />
           </Transition.Child>
 
-          <div className="flex items-center justify-center min-hscreen px-4">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <Dialog.Panel className="relative z-10 w-full max-w-md bg-white rounded-xl p-6 shadow-xl">
-                <Dialog.Title className="text-lg font-bold mb-4">
-                  Crear Nuevo Ingrediente
-                </Dialog.Title>
+          {/* Wrapper full-screen para centrar verticalmente */}
+          <div className="fixed inset-0 overflow-y-auto">
+            {/* Contenedor centrado */}
+            <div className="flex items-center justify-center min-h-screen px-4">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="relative z-10 w-full max-w-md bg-white rounded-xl p-6 shadow-xl">
+                  <Dialog.Title className="text-lg font-bold mb-4">
+                    Crear Nuevo Ingrediente
+                  </Dialog.Title>
 
-                <div className="flex flex-col gap-3 mb-4">
-                  <input
-                    type="text"
-                    placeholder="Nombre"
-                    className="border px-3 py-2 rounded"
-                    value={nuevoNombre}
-                    onChange={(e) => setNuevoNombre(e.target.value)}
-                  />
-                  <input
-                    type="number"
-                    step="0.01"
-                    placeholder="Precio"
-                    className="border px-3 py-2 rounded"
-                    value={nuevoPrecio}
-                    onChange={(e) => setNuevoPrecio(e.target.value)}
-                  />
-                </div>
+                  <div className="flex flex-col gap-3 mb-4">
+                    <input
+                      type="text"
+                      placeholder="Nombre"
+                      className="border px-3 py-2 rounded"
+                      value={nuevoNombre}
+                      onChange={(e) => setNuevoNombre(e.target.value)}
+                    />
+                    <input
+                      type="number"
+                      step="0.01"
+                      placeholder="Precio"
+                      className="border px-3 py-2 rounded"
+                      value={nuevoPrecio}
+                      onChange={(e) => setNuevoPrecio(e.target.value)}
+                    />
+                  </div>
 
-                <div className="flex justify-end gap-3">
-                  <button
-                    onClick={() => setCrearModalVisible(false)}
-                    className="cursor-pointer px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    onClick={handleCrear}
-                    className="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  >
-                    Añadir
-                  </button>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
+                  <div className="flex justify-end gap-3">
+                    <button
+                      onClick={() => setCrearModalVisible(false)}
+                      className="cursor-pointer px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      onClick={handleCrear}
+                      className="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                    >
+                      Añadir
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
           </div>
         </Dialog>
       </Transition>
