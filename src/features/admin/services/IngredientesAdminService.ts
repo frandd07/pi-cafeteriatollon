@@ -73,3 +73,13 @@ export const actualizarIngrediente = async (
     throw new Error(data.error || "Error al actualizar ingrediente");
   }
 };
+
+export async function deleteIngrediente(id: number): Promise<void> {
+  const res = await fetch(`${API_URL}/ingredientes/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) {
+    const { mensaje } = await res.json();
+    throw new Error(mensaje || "Error eliminando ingrediente");
+  }
+}

@@ -6,6 +6,7 @@ import {
   getIngredientesAsignados,
   guardarIngredientesAsignados,
   crearNuevoIngrediente,
+  deleteIngrediente,
 } from "../services/IngredientesAdminService";
 import type { Ingrediente, IngredienteAsignado } from "@/interfaces";
 
@@ -41,6 +42,19 @@ export function useIngredientesModal(productoId: number, isOpen: boolean) {
         return [...prev, { ingrediente_id: id, precio_extra: precioDefecto }];
       }
     });
+  };
+
+  const eliminarIngrediente = async (id: number) => {
+    try {
+      await deleteIngrediente(id);
+      // actualizar la lista de ingredientes disponibles
+      setIngredientes((prev) => prev.filter((i) => i.id !== id));
+      // y quitarlo de los seleccionados si estaba
+      setSeleccionados((prev) => prev.filter((x) => x.ingrediente_id !== id));
+    } catch (err: any) {
+      console.error(err);
+      alert("No se pudo eliminar el ingrediente: " + err.message);
+    }
   };
 
   const guardar = async (onClose: () => void) => {
@@ -86,6 +100,7 @@ export function useIngredientesModal(productoId: number, isOpen: boolean) {
     setNuevoPrecio,
     toggleSeleccion,
     guardar,
+    deleteIngrediente,
     crearIngrediente,
   };
 }

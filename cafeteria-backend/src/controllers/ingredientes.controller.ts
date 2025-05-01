@@ -58,3 +58,25 @@ export const actualizarIngrediente = async (
 
   res.json({ success: true });
 };
+
+// Al principio del archivo, junto a tus otros exports:
+export const eliminarIngrediente = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+
+  // Llamada a Supabase para borrar
+  const { data, error } = await supabase
+    .from("ingredientes")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error al eliminar ingrediente:", error);
+    res.status(500).json({ mensaje: "No se pudo eliminar el ingrediente" });
+    return;
+  }
+
+  res.status(200).json({ mensaje: "Ingrediente eliminado correctamente" });
+};
