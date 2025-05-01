@@ -9,7 +9,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { toast as toaster } from "react-hot-toast";
 import { Ingrediente } from "@/interfaces";
-import { TrashIcon } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 interface Props {
   isOpen: boolean;
@@ -213,7 +213,10 @@ export default function GestionarIngredientesModal({ isOpen, onClose }: Props) {
                         className="p-1 hover:bg-red-100 rounded"
                         title="Eliminar ingrediente"
                       >
-                        <TrashIcon size={16} className="text-red-600" />
+                        <Trash2
+                          size={16}
+                          className="cursor-pointer text-red-600"
+                        />
                       </button>
                     </div>
                   ))}

@@ -114,13 +114,13 @@ const MenuPanel = () => {
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
           <button
             onClick={() => setCrearProductoOpen(true)}
-            className="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 px-5 py-2.5 rounded shadow text-gray-900 flex items-center justify-center sm:justify-start gap-2"
+            className="cursor-pointer w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 px-5 py-2.5 rounded shadow text-gray-900 flex items-center justify-center sm:justify-start gap-2"
           >
             Añadir producto
           </button>
           <button
             onClick={() => setGestionarIngOpen(true)}
-            className="w-full sm:w-auto bg-purple-500 hover:bg-purple-600 px-5 py-2.5 rounded shadow text-white flex items-center justify-center sm:justify-start gap-2"
+            className="cursor-pointer w-full sm:w-auto bg-purple-500 hover:bg-purple-600 px-5 py-2.5 rounded shadow text-white flex items-center justify-center sm:justify-start gap-2"
           >
             Gestionar ingredientes
           </button>
@@ -284,13 +284,13 @@ const MenuPanel = () => {
                   <div className="mt-6 flex justify-end gap-3">
                     <button
                       onClick={() => setCrearProductoOpen(false)}
-                      className="px-4 py-2 bg-gray-200 rounded"
+                      className="cursor-pointer px-4 py-2 bg-gray-200 rounded"
                     >
                       Cancelar
                     </button>
                     <button
                       onClick={crearProducto}
-                      className="px-4 py-2 bg-blue-600 text-white rounded"
+                      className="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded"
                     >
                       Crear
                     </button>
