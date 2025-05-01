@@ -1,36 +1,49 @@
 import { Usuario } from "@/interfaces";
-
 const API_URL = import.meta.env.VITE_API_URL;
 
-// ✅ Obtener usuarios filtrados por tipo
+// Obtener usuarios filtrados
 export const getUsuariosFiltrados = async (
   tipo: "todos" | "alumno" | "profesor" | "personal"
 ): Promise<Usuario[] | null> => {
-  try {
-    const res = await fetch(`${API_URL}/usuarios?tipo=${tipo}`);
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(data.error);
-    return data as Usuario[];
-  } catch (error) {
-    console.error("❌ Error en getUsuariosFiltrados:", error);
+  const res = await fetch(`${API_URL}/usuarios?tipo=${tipo}`);
+  if (!res.ok) {
+    const err = await res.json();
+    console.error("❌", err);
     return null;
   }
+  return (await res.json()) as Usuario[];
 };
 
-// ✅ Verificar usuario (por parte del admin)
+// Verificar usuario (admin)
 export const marcarUsuarioComoVerificado = async (
   id: string
 ): Promise<boolean> => {
-  try {
-    const res = await fetch(`${API_URL}/usuarios/${id}/verificar`, {
-      method: "PATCH",
-    });
+  const res = await fetch(`${API_URL}/usuarios/${id}/verificar`, {
+    method: "PATCH",
+  });
+  return res.ok;
+};
 
-    if (!res.ok) throw new Error("Error al verificar usuario");
-    return true;
-  } catch (error) {
-    console.error("❌ Error al verificar usuario:", error);
-    return false;
-  }
+// Aceptar usuario (admin)
+export const aceptarUsuario = async (id: string): Promise<boolean> => {
+  const res = await fetch(`${API_URL}/usuarios/${id}/aceptar`, {
+    method: "PATCH",
+  });
+  return res.ok;
+};
+
+// Rechazar (eliminar) usuario (admin)
+export const rechazarUsuario = async (id: string): Promise<boolean> => {
+  const res = await fetch(`${API_URL}/usuarios/${id}/rechazar`, {
+    method: "DELETE",
+  });
+  return res.ok;
+};
+
+// Borrar usuario
+export const eliminarUsuario = async (id: string): Promise<boolean> => {
+  const res = await fetch(`${API_URL}/usuarios/${id}`, {
+    method: "DELETE",
+  });
+  return res.ok;
 };

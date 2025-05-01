@@ -7,11 +7,7 @@ export interface IngredientePrecio {
 export interface Ingrediente {
   id: number;
   nombre: string;
-}
-
-export interface IngredienteAsignado {
-  id: number;
-  precioExtra: string;
+  precio_extra: number;
 }
 
 export interface IngredientesModalProps {
@@ -19,4 +15,9 @@ export interface IngredientesModalProps {
   nombreProducto: string;
   isOpen: boolean;
   onClose: () => void;
+}
+
+export interface IngredienteAsignado {
+  ingrediente_id: number;
+  precio_extra: number;
 }
