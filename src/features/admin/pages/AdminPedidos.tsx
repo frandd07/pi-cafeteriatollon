@@ -210,22 +210,25 @@ const AdminPedidos = () => {
                       </p>
                     </div>
 
-                    <div className="flex flex-col items-start sm:items-end">
+                    <div className="flex flex-col items-start sm:items-end min-w-[180px]">
                       <p className="text-gray-500 text-sm mb-1">
                         Estado de pago
                       </p>
-                      <label className="inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={pedido.pagado}
-                          onChange={() => togglePagado(pedido)}
-                          className="sr-only peer"
-                        />
-                        <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                        <span className="ml-3 text-sm font-medium text-gray-700">
+                      <div className="flex items-center gap-3">
+                        <label className="relative inline-flex items-center w-11 h-6 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={pedido.pagado}
+                            onChange={() => togglePagado(pedido)}
+                            className="sr-only peer"
+                          />
+                          <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-all duration-300"></div>
+                          <div className="absolute left-[2px] top-[2px] w-5 h-5 bg-white border border-gray-300 rounded-full transition-all duration-300 peer-checked:translate-x-5"></div>
+                        </label>
+                        <span className="text-sm font-medium text-gray-700">
                           {pedido.pagado ? "Pagado" : "No pagado"}
                         </span>
-                      </label>
+                      </div>
                     </div>
                   </div>
                 </div>
