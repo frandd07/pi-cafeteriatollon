@@ -341,7 +341,7 @@ const AdminPedidos = () => {
             </p>
             <button
               onClick={() => setFiltro("")}
-              className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm transition duration-150"
+              className="cursor-pointer mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm transition duration-150"
             >
               Ver todos los pedidos
             </button>

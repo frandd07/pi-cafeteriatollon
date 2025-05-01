@@ -34,7 +34,7 @@ const UsuariosPanel = () => {
           <select
             value={filtroTipo}
             onChange={(e) => setFiltroTipo(e.target.value as any)}
-            className="border px-2 py-1 rounded"
+            className="cursor-pointer border px-2 py-1 rounded"
           >
             <option value="todos">Todos</option>
             <option value="alumno">Alumnos</option>
@@ -81,14 +81,14 @@ const UsuariosPanel = () => {
                 {!user.verificado && (
                   <button
                     onClick={() => verificarUsuario(user.id)}
-                    className="bg-green-600 text-white px-3 py-1 rounded"
+                    className="cursor-pointer bg-green-600 text-white px-3 py-1 rounded"
                   >
                     Verificar
                   </button>
                 )}
                 <button
                   onClick={() => eliminarUsuario(user.id)}
-                  className="bg-red-600 text-white px-3 py-1 rounded"
+                  className="cursor-pointer bg-red-600 text-white px-3 py-1 rounded"
                 >
                   Eliminar
                 </button>

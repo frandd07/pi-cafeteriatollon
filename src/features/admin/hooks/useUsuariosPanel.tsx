@@ -47,13 +47,13 @@ export const useUsuariosPanel = () => {
         <div className="flex justify-end gap-2 mt-3">
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
+            className="cursor-pointer px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
           >
             Cancelar
           </button>
           <button
             onClick={() => handleEliminar(id, t.id)}
-            className="px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700"
+            className="cursor-pointer px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700"
           >
             Eliminar
           </button>
