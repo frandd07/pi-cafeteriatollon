@@ -38,33 +38,57 @@ const AdminPage = () => {
   };
 
   const activarNuevoCurso = async () => {
-    const confirmacion = window.confirm(
-      "¿Estás seguro de que quieres iniciar un nuevo curso escolar?\nEsto hará que todos los alumnos deban actualizar su curso."
+    toast(
+      (t) => (
+        <span className="flex flex-col gap-2">
+          ¿Iniciar un nuevo curso escolar? <br />
+          Esto hará que todos los alumnos deban actualizar su curso.
+          <div className="flex justify-end gap-2 mt-2">
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={async () => {
+                toast.dismiss(t.id);
+
+                try {
+                  const session = await supabase.auth.getSession();
+                  const token = session.data.session?.access_token;
+
+                  const res = await fetch(
+                    "http://localhost:3001/usuarios/iniciar-curso",
+                    {
+                      method: "PUT",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                      },
+                    }
+                  );
+
+                  if (res.ok) {
+                    toast.success("Nuevo curso activado 🎓");
+                  } else {
+                    const { error } = await res.json();
+                    toast.error(`Error al activar curso: ${error}`);
+                  }
+                } catch (error) {
+                  toast.error("Error inesperado");
+                  console.error("Error:", error);
+                }
+              }}
+              className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+            >
+              Confirmar
+            </button>
+          </div>
+        </span>
+      ),
+      { duration: 10000 }
     );
-    if (!confirmacion) return;
-
-    try {
-      const session = await supabase.auth.getSession();
-      const token = session.data.session?.access_token;
-
-      const res = await fetch("http://localhost:3001/usuarios/iniciar-curso", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.ok) {
-        toast.success("Nuevo curso activado 🎓");
-      } else {
-        const { error } = await res.json();
-        toast.error(`Error al activar curso: ${error}`);
-      }
-    } catch (error) {
-      toast.error("Error inesperado");
-      console.error("Error:", error);
-    }
   };
 
   return (
