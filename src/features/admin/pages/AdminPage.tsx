@@ -147,21 +147,21 @@ const AdminPage = () => {
             </button>
           </div>
 
-          {/* Botón iniciar curso */}
-          <button
-            onClick={activarNuevoCurso}
-            className="mb-2 w-full text-left text-yellow-700 bg-yellow-200 hover:bg-yellow-300 px-3 py-2 rounded cursor-pointer transition font-medium"
-          >
-            🏫 Iniciar nuevo curso escolar
-          </button>
-
-          {/* Botón logout */}
-          <button
-            onClick={handleLogout}
-            className="w-full text-left text-red-600 hover:bg-red-600 hover:text-white px-3 py-2 rounded cursor-pointer transition"
-          >
-            Cerrar sesión
-          </button>
+          {/* Botones al fondo */}
+          <div className="space-y-2 mt-auto">
+            <button
+              onClick={activarNuevoCurso}
+              className="w-full text-left px-3 py-2 rounded transition cursor-pointer text-yellow-700 hover:bg-yellow-200 bg-white"
+            >
+              🏫 Iniciar nuevo curso escolar
+            </button>
+            <button
+              onClick={handleLogout}
+              className="w-full text-left text-red-600 hover:bg-red-600 hover:text-white px-3 py-2 rounded cursor-pointer transition"
+            >
+              Cerrar sesión
+            </button>
+          </div>
         </aside>
 
         {/* CONTENIDO */}
