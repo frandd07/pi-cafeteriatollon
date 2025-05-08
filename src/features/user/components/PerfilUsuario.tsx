@@ -47,25 +47,25 @@ const PerfilUsuario = () => {
     .substring(0, 2);
 
   return (
-    <div className="max-w-xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
       {/* Cabecera con avatar */}
-      <div className="bg-gradient-to-r from-[#fa6a69] to-[#fa8c8b] p-6 flex items-center">
-        <div className="h-20 w-20 rounded-full flex items-center justify-center bg-white text-[#fa6a69] text-2xl font-bold mr-4 shadow-md">
+      <div className="bg-gradient-to-r from-[#fa6a69] to-[#fa8c8b] p-8 flex items-center">
+        <div className="h-24 w-24 rounded-full flex items-center justify-center bg-white text-[#fa6a69] text-3xl font-bold mr-6 shadow-lg">
           {iniciales}
         </div>
         <div className="text-white">
-          <h2 className="text-2xl font-semibold">{nombreCompleto}</h2>
-          <p className="text-white opacity-90">
+          <h2 className="text-3xl font-semibold">{nombreCompleto}</h2>
+          <p className="text-white opacity-90 text-lg">
             {perfil?.email || "Sin correo"}
           </p>
         </div>
       </div>
 
       {/* Contenido */}
-      <div className="p-6">
+      <div className="p-8">
         {mensaje.texto && (
           <div
-            className={`mb-4 p-3 rounded-md ${
+            className={`mb-6 p-4 rounded-md ${
               mensaje.tipo === "success"
                 ? "bg-green-100 text-green-700 border border-green-200"
                 : "bg-red-100 text-red-700 border border-red-200"
@@ -76,12 +76,12 @@ const PerfilUsuario = () => {
         )}
 
         <div className="mb-6">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">
+          <h3 className="text-xl font-medium text-gray-900 mb-4">
             Información académica
           </h3>
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="mb-6">
+            <label className="block text-lg font-medium text-gray-700 mb-2">
               Curso actual
             </label>
             <div className={`relative ${!puedeEditar ? "opacity-75" : ""}`}>
@@ -91,15 +91,15 @@ const PerfilUsuario = () => {
                 onChange={(e) => setCurso(e.target.value)}
                 disabled={!puedeEditar || guardando}
                 placeholder="No disponible"
-                className={`w-full p-3 border ${
+                className={`w-full p-4 border ${
                   !puedeEditar ? "bg-gray-50" : "bg-white"
-                } rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all`}
+                } rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-lg`}
               />
               {!puedeEditar && (
-                <div className="absolute right-3 top-3">
+                <div className="absolute right-4 top-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-gray-400"
+                    className="h-6 w-6 text-gray-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -117,10 +117,10 @@ const PerfilUsuario = () => {
           </div>
 
           {!puedeEditar ? (
-            <div className="bg-amber-50 border border-amber-200 p-3 rounded-md flex items-center text-amber-700 text-sm">
+            <div className="bg-amber-50 border border-amber-200 p-4 rounded-md flex items-center text-amber-700 text-base">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 mr-2 flex-shrink-0"
+                className="h-6 w-6 mr-3 flex-shrink-0"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -138,14 +138,14 @@ const PerfilUsuario = () => {
             <button
               onClick={handleGuardar}
               disabled={guardando}
-              className={`w-full flex items-center justify-center py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all ${
+              className={`w-full flex items-center justify-center py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all text-lg ${
                 guardando ? "opacity-75 cursor-not-allowed" : ""
               }`}
             >
               {guardando ? (
                 <>
                   <svg
-                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -170,7 +170,7 @@ const PerfilUsuario = () => {
                 <>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-2"
+                    className="h-6 w-6 mr-2"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
