@@ -6,16 +6,20 @@ import { useNavigate } from "react-router-dom";
 import { MenuCliente, CarritoCliente, MisPedidos } from "../components";
 import HeaderSencillo from "@/components/Header/HeaderSencillo";
 import { Menu } from "lucide-react";
+import { useRedireccionCurso } from "@/features/auth";
+import PerfilUsuario from "../components/PerfilUsuario";
+import { logoutUser } from "@/features/auth";
 
 const UserPage = () => {
   const [seccion, setSeccion] = useState<
     "menu" | "carrito" | "pedidos" | "perfil"
   >("menu");
+  useRedireccionCurso(setSeccion);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await logoutUser();
     navigate("/login");
   };
 
@@ -88,9 +92,7 @@ const UserPage = () => {
             {seccion === "menu" && <MenuCliente />}
             {seccion === "carrito" && <CarritoCliente />}
             {seccion === "pedidos" && <MisPedidos />}
-            {seccion === "perfil" && (
-              <div>👤 Aquí va el perfil del usuario</div>
-            )}
+            {seccion === "perfil" && <PerfilUsuario />}
           </main>
         </div>
       </div>

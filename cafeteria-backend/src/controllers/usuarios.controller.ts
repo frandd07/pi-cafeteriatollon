@@ -108,3 +108,24 @@ export const eliminarUsuario = async (
 
   res.status(200).json({ success: true });
 };
+
+// Iniciar nuevo curso escolar
+export const iniciarNuevoCursoEscolar = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { error } = await supabase
+    .from("usuarios")
+    .update({
+      debe_actualizar_curso: true,
+      verificado: false,
+    })
+    .eq("tipo", "alumno");
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  res.status(200).json({ success: true });
+};
