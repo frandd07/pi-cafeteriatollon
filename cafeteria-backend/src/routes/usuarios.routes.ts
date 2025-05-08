@@ -6,11 +6,13 @@ import {
   rechazarUsuario,
   eliminarUsuario,
   iniciarNuevoCursoEscolar,
+  eliminarUsuariosMasivo,
 } from "../controllers/usuarios.controller";
 import { esAdmin } from "../middlewares/esAdmin";
 
 const router = Router();
 
+router.post("/eliminar-masivo", esAdmin, eliminarUsuariosMasivo);
 router.get("/", getUsuarios);
 router.patch("/:id/verificar", verificarUsuario);
 

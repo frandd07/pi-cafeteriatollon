@@ -47,3 +47,25 @@ export const eliminarUsuario = async (id: string): Promise<boolean> => {
   });
   return res.ok;
 };
+
+export const eliminarUsuariosMasivo = async (
+  ids: string[]
+): Promise<boolean> => {
+  const token = localStorage.getItem("token"); // 🔐 Recupera el access_token
+
+  const res = await fetch(`${API_URL}/usuarios/eliminar-masivo`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, // ✅ Esto es clave para pasar esAdmin
+    },
+    body: JSON.stringify({ ids }),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    console.error("❌ Error al eliminar usuarios:", errorData);
+  }
+
+  return res.ok;
+};

@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
-import { getUsuariosFiltrados, marcarUsuarioComoVerificado } from "../services";
 import toast from "react-hot-toast";
-import { eliminarUsuario as eliminarUsuarioService } from "../services/UsuariosService";
+import {
+  getUsuariosFiltrados,
+  marcarUsuarioComoVerificado,
+  eliminarUsuario as eliminarUsuarioService,
+  eliminarUsuariosMasivo,
+} from "../services";
 import { Usuario } from "@/interfaces";
 
 export const useUsuariosPanel = () => {
@@ -14,10 +18,8 @@ export const useUsuariosPanel = () => {
 
   const fetchUsuarios = async () => {
     setLoading(true);
-
     const data = await getUsuariosFiltrados(filtroTipo);
     if (data) setUsuarios(data);
-
     setLoading(false);
   };
 
@@ -62,6 +64,42 @@ export const useUsuariosPanel = () => {
     ));
   };
 
+  const eliminarUsuariosSeleccionados = (ids: string[]) => {
+    toast.custom((t) => (
+      <div className="bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-2 w-80">
+        <p className="font-medium text-gray-800">
+          ¿Eliminar {ids.length} usuarios?
+        </p>
+        <p className="text-sm text-gray-500">
+          Esta acción no se puede deshacer.
+        </p>
+        <div className="flex justify-end gap-2 mt-3">
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="cursor-pointer px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={async () => {
+              toast.dismiss(t.id);
+              const ok = await eliminarUsuariosMasivo(ids);
+              if (ok) {
+                toast.success("✅ Usuarios eliminados");
+                fetchUsuarios();
+              } else {
+                toast.error("❌ Error al eliminar usuarios");
+              }
+            }}
+            className="cursor-pointer px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    ));
+  };
+
   useEffect(() => {
     fetchUsuarios();
   }, [filtroTipo]);
@@ -75,5 +113,6 @@ export const useUsuariosPanel = () => {
     setBusqueda,
     verificarUsuario,
     eliminarUsuario,
+    eliminarUsuariosSeleccionados,
   };
 };

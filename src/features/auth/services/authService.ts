@@ -29,7 +29,6 @@ import { supabase } from "@/supabaseClient";
 
 export const loginUser = async (email: string, password: string) => {
   try {
-    // Autenticación con Supabase Auth
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -39,7 +38,6 @@ export const loginUser = async (email: string, password: string) => {
       throw new Error("Correo o contraseña incorrectos");
     }
 
-    // Obtener perfil desde la tabla 'usuarios'
     const { data: perfil, error: perfilError } = await supabase
       .from("usuarios")
       .select("*")
@@ -50,9 +48,9 @@ export const loginUser = async (email: string, password: string) => {
       throw new Error("No se pudo obtener el perfil del usuario");
     }
 
-    // Guardar datos en localStorage
     localStorage.setItem("userId", data.user.id);
     localStorage.setItem("rol", perfil.tipo);
+    localStorage.setItem("token", data.session.access_token); // ✅ IMPORTANTE
     console.log("Login exitoso. userId guardado:", data.user.id);
 
     return {

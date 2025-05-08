@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Spinner } from "@/components/Spinner";
 import { useUsuariosPanel } from "../hooks";
 
@@ -13,9 +14,10 @@ const UsuariosPanel = () => {
     setBusqueda,
     verificarUsuario,
     eliminarUsuario,
+    eliminarUsuariosSeleccionados,
   } = useUsuariosPanel();
 
-  if (loading) return <Spinner />;
+  const [seleccionados, setSeleccionados] = useState<Set<string>>(new Set());
 
   const usuariosFiltrados = usuarios.filter(
     (user) =>
@@ -24,6 +26,24 @@ const UsuariosPanel = () => {
         .includes(busqueda.toLowerCase()) ||
       user.email.toLowerCase().includes(busqueda.toLowerCase())
   );
+
+  const toggleSeleccion = (id: string) => {
+    setSeleccionados((prev) => {
+      const copia = new Set(prev);
+      copia.has(id) ? copia.delete(id) : copia.add(id);
+      return copia;
+    });
+  };
+
+  const seleccionarTodos = () => {
+    if (seleccionados.size === usuariosFiltrados.length) {
+      setSeleccionados(new Set());
+    } else {
+      setSeleccionados(new Set(usuariosFiltrados.map((u) => u.id)));
+    }
+  };
+
+  if (loading) return <Spinner />;
 
   return (
     <div className="overflow-x-auto">
@@ -52,9 +72,32 @@ const UsuariosPanel = () => {
         </div>
       </div>
 
+      {seleccionados.size > 0 && (
+        <div className="mb-4">
+          <button
+            onClick={() =>
+              eliminarUsuariosSeleccionados(Array.from(seleccionados))
+            }
+            className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-800"
+          >
+            Eliminar {seleccionados.size} seleccionados
+          </button>
+        </div>
+      )}
+
       <table className="min-w-full border border-gray-300">
         <thead className="bg-gray-100">
           <tr>
+            <th className="border px-4 py-2">
+              <input
+                type="checkbox"
+                checked={
+                  seleccionados.size === usuariosFiltrados.length &&
+                  usuariosFiltrados.length > 0
+                }
+                onChange={seleccionarTodos}
+              />
+            </th>
             <th className="border px-4 py-2 text-left">Nombre completo</th>
             <th className="border px-4 py-2 text-left">Email</th>
             <th className="border px-4 py-2 text-left">Tipo</th>
@@ -66,6 +109,13 @@ const UsuariosPanel = () => {
         <tbody>
           {usuariosFiltrados.map((user) => (
             <tr key={user.id}>
+              <td className="border px-4 py-2 text-center">
+                <input
+                  type="checkbox"
+                  checked={seleccionados.has(user.id)}
+                  onChange={() => toggleSeleccion(user.id)}
+                />
+              </td>
               <td className="border px-4 py-2">
                 {user.nombre} {user.apellido1 ?? ""} {user.apellido2 ?? ""}
               </td>
