@@ -18,4 +18,5 @@ export interface Usuario {
   tipo: string;
   curso?: string;
   verificado: boolean;
+  debe_actualizar_curso: boolean;
 }

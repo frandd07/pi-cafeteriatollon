@@ -9,7 +9,9 @@ export const getUsuarios = async (
   const { tipo } = req.query;
   let query = supabase
     .from("usuarios")
-    .select("id, nombre, apellido1, apellido2, email, tipo, curso, verificado")
+    .select(
+      "id, nombre, apellido1, apellido2, email, tipo, curso, verificado,debe_actualizar_curso"
+    )
     .neq("tipo", "admin");
 
   if (tipo && tipo !== "todos") {
@@ -118,7 +120,6 @@ export const iniciarNuevoCursoEscolar = async (
     .from("usuarios")
     .update({
       debe_actualizar_curso: true,
-      verificado: false,
     })
     .eq("tipo", "alumno");
 

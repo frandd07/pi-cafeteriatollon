@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import toast from "react-hot-toast";
 import {
   getUsuariosFiltrados,
@@ -11,10 +11,21 @@ import { Usuario } from "@/interfaces";
 export const useUsuariosPanel = () => {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Filtros existentes
   const [filtroTipo, setFiltroTipo] = useState<
     "todos" | "alumno" | "profesor" | "personal"
   >("todos");
   const [busqueda, setBusqueda] = useState("");
+
+  // --- NUEVO filtro de estado ---
+  type EstadoFiltro =
+    | "todos"
+    | "noVerificados"
+    | "debenActualizar"
+    | "normales";
+  const [filtroEstado, setFiltroEstado] = useState<EstadoFiltro>("todos");
+  // --------------------------------
 
   const fetchUsuarios = async () => {
     setLoading(true);
@@ -22,6 +33,35 @@ export const useUsuariosPanel = () => {
     if (data) setUsuarios(data);
     setLoading(false);
   };
+
+  // Aplica filtros de búsqueda, tipo y estado sobre el array que viene de la API
+  const usuariosFiltrados = useMemo(() => {
+    return usuarios
+      .filter((u) => {
+        // filtro por texto (nombre + apellidos)
+        const texto = `${u.nombre} ${u.apellido1} ${
+          u.apellido2 || ""
+        }`.toLowerCase();
+        return texto.includes(busqueda.toLowerCase());
+      })
+      .filter((u) => {
+        // filtro por tipo
+        return filtroTipo === "todos" || u.tipo === filtroTipo;
+      })
+      .filter((u) => {
+        // filtro por estado de verificación / actualización
+        switch (filtroEstado) {
+          case "noVerificados":
+            return !u.verificado;
+          case "debenActualizar":
+            return u.debe_actualizar_curso;
+          case "normales":
+            return u.verificado && !u.debe_actualizar_curso;
+          default:
+            return true;
+        }
+      });
+  }, [usuarios, busqueda, filtroTipo, filtroEstado]);
 
   const verificarUsuario = async (id: string) => {
     const success = await marcarUsuarioComoVerificado(id);
@@ -105,12 +145,14 @@ export const useUsuariosPanel = () => {
   }, [filtroTipo]);
 
   return {
-    usuarios,
+    usuarios: usuariosFiltrados, // ahora devolvemos los ya filtrados
     loading,
     filtroTipo,
     setFiltroTipo,
     busqueda,
     setBusqueda,
+    filtroEstado, // expuesto para el componente
+    setFiltroEstado, // expuesto para el componente
     verificarUsuario,
     eliminarUsuario,
     eliminarUsuariosSeleccionados,
