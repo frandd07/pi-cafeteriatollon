@@ -9,7 +9,7 @@ import type { ProductoCarrito, Recreo } from "@/interfaces";
 const MisPedidos: React.FC = () => {
   const { pedidos, loading, hacerPedido, eliminarPedido } = useMisPedidos();
 
-  const [recreo, setRecreo] = useState<Recreo>("primer");
+  const [recreo] = useState<Recreo>("primer");
   const [productosSeleccionados, setProductosSeleccionados] = useState<
     ProductoCarrito[]
   >([]);
@@ -65,31 +65,6 @@ const MisPedidos: React.FC = () => {
             <h2 className="text-2xl font-bold">
               Mis Pedidos ({pedidos.length})
             </h2>
-          </div>
-
-          {/* Selección de recreo y botón */}
-          <div className="mb-6 flex flex-col md:flex-row md:items-end md:gap-4">
-            <div className="flex-1">
-              <label className="block mb-2 text-gray-700">
-                Selecciona recreo:
-              </label>
-              <select
-                value={recreo}
-                onChange={(e) => setRecreo(e.target.value as Recreo)}
-                className="w-full md:w-1/2 border rounded px-3 py-2"
-              >
-                <option value="primer">Primer recreo</option>
-                <option value="segundo">Segundo recreo</option>
-                <option value="lo_antes_posible">Lo antes posible</option>
-              </select>
-            </div>
-            <button
-              onClick={onSubmit}
-              disabled={loading}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50"
-            >
-              {loading ? "Procesando…" : "Hacer pedido"}
-            </button>
           </div>
 
           {/* Lista de pedidos */}
