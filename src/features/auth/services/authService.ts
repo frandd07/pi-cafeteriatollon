@@ -25,34 +25,58 @@ export const registerUser = async (payload: RegisterPayload) => {
 };
 
 // 🔓 Login + obtener perfil
+import { supabase } from "@/supabaseClient";
+
 export const loginUser = async (email: string, password: string) => {
   try {
-    const res = await fetch(`${API_URL}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
     });
 
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(data.error);
-
-    // Guardar datos en localStorage
-    if (data?.perfil?.id && data?.perfil?.tipo) {
-      localStorage.setItem("userId", data.perfil.id);
-      localStorage.setItem("rol", data.perfil.tipo);
-      console.log("Login exitoso. userId guardado:", data.perfil.id);
-    } else {
-      console.error("El backend no devolvió un perfil correcto:", data);
+    if (error || !data.session || !data.user) {
+      throw new Error("Correo o contraseña incorrectos");
     }
+
+    const { data: perfil, error: perfilError } = await supabase
+      .from("usuarios")
+      .select("*")
+      .eq("id", data.user.id)
+      .single();
+
+    if (perfilError || !perfil) {
+      throw new Error("No se pudo obtener el perfil del usuario");
+    }
+
+    localStorage.setItem("userId", data.user.id);
+    localStorage.setItem("rol", perfil.tipo);
+    localStorage.setItem("token", data.session.access_token); // ✅ IMPORTANTE
+    console.log("Login exitoso. userId guardado:", data.user.id);
 
     return {
       data: {
         user: data.user,
-        perfil: data.perfil,
+        perfil,
       },
     };
   } catch (error: any) {
+    return { error: error.message };
+  }
+};
+
+export const logoutUser = async () => {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+
+    // Limpia localStorage si estás usando valores ahí también
+    localStorage.removeItem("userId");
+    localStorage.removeItem("rol");
+
+    console.log("Sesión cerrada correctamente");
+    return { success: true };
+  } catch (error: any) {
+    console.error("Error al cerrar sesión:", error.message);
     return { error: error.message };
   }
 };

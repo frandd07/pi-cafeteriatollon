@@ -9,7 +9,9 @@ export const getUsuarios = async (
   const { tipo } = req.query;
   let query = supabase
     .from("usuarios")
-    .select("id, nombre, apellido1, apellido2, email, tipo, curso, verificado")
+    .select(
+      "id, nombre, apellido1, apellido2, email, tipo, curso, verificado,debe_actualizar_curso"
+    )
     .neq("tipo", "admin");
 
   if (tipo && tipo !== "todos") {
@@ -103,6 +105,65 @@ export const eliminarUsuario = async (
 
   if (deleteError) {
     res.status(500).json({ error: "Error al eliminar de la tabla usuarios" });
+    return;
+  }
+
+  res.status(200).json({ success: true });
+};
+
+// Iniciar nuevo curso escolar
+export const iniciarNuevoCursoEscolar = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { error } = await supabase
+    .from("usuarios")
+    .update({
+      debe_actualizar_curso: true,
+    })
+    .eq("tipo", "alumno");
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  res.status(200).json({ success: true });
+};
+
+// Eliminar múltiples usuarios
+export const eliminarUsuariosMasivo = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  console.log("📦 Body recibido en eliminar-masivo:", req.body);
+  const { ids } = req.body;
+
+  if (!Array.isArray(ids) || ids.length === 0) {
+    res
+      .status(400)
+      .json({ error: "Se requiere un array de IDs para eliminar." });
+    return;
+  }
+
+  // 1. Eliminar de Supabase Auth
+  for (const id of ids) {
+    const { error: authError } = await supabase.auth.admin.deleteUser(id);
+    if (authError) {
+      console.error(
+        `Error al eliminar usuario ${id} en Auth:`,
+        authError.message
+      );
+    }
+  }
+
+  // 2. Eliminar de la tabla 'usuarios'
+  const { error } = await supabase.from("usuarios").delete().in("id", ids);
+
+  if (error) {
+    res
+      .status(500)
+      .json({ error: "Error al eliminar usuarios en la base de datos." });
     return;
   }
 

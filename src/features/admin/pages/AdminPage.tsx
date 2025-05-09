@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { UsuariosPanel } from "../components";
@@ -8,6 +8,8 @@ import MenuPanel from "./MenuPanel";
 import HeaderSencillo from "@/components/Header/HeaderSencillo";
 import AdminPedidos from "./AdminPedidos";
 import { Menu } from "lucide-react";
+import toast from "react-hot-toast";
+import { logoutUser } from "@/features/auth";
 
 const AdminPage = () => {
   const [seccion, setSeccion] = useState<"usuarios" | "menu" | "pedidos">(
@@ -17,13 +19,76 @@ const AdminPage = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await logoutUser();
     navigate("/login");
   };
+
+  useEffect(() => {
+    const mostrarToken = async () => {
+      const session = await supabase.auth.getSession();
+      console.log("TOKEN DEL ADMIN:", session.data.session?.access_token);
+    };
+
+    mostrarToken();
+  }, []);
 
   const handleSelect = (opcion: typeof seccion) => {
     setSeccion(opcion);
     setSidebarVisible(false); // Oculta la sidebar en móvil
+  };
+
+  const activarNuevoCurso = async () => {
+    toast(
+      (t) => (
+        <span className="flex flex-col gap-2">
+          ¿Iniciar un nuevo curso escolar? <br />
+          Esto hará que todos los alumnos deban actualizar su curso.
+          <div className="flex justify-end gap-2 mt-2">
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={async () => {
+                toast.dismiss(t.id);
+
+                try {
+                  const session = await supabase.auth.getSession();
+                  const token = session.data.session?.access_token;
+
+                  const res = await fetch(
+                    "http://localhost:3001/usuarios/iniciar-curso",
+                    {
+                      method: "PUT",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                      },
+                    }
+                  );
+
+                  if (res.ok) {
+                    toast.success("Nuevo curso activado 🎓");
+                  } else {
+                    const { error } = await res.json();
+                    toast.error(`Error al activar curso: ${error}`);
+                  }
+                } catch (error) {
+                  toast.error("Error inesperado");
+                  console.error("Error:", error);
+                }
+              }}
+              className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+            >
+              Confirmar
+            </button>
+          </div>
+        </span>
+      ),
+      { duration: 10000 }
+    );
   };
 
   return (
@@ -41,14 +106,13 @@ const AdminPage = () => {
       </div>
 
       <div className="flex flex-1 overflow-hidden relative">
-        {/* SIDEBAR superpuesta en móvil */}
+        {/* SIDEBAR */}
         <aside
           className={`absolute md:static top-0 left-0 h-full md:h-auto w-64 bg-gray-100 p-4 flex flex-col justify-between z-40 transition-transform transform ${
             sidebarVisible ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0`}
         >
           <div className="space-y-2">
-            {/* Botón para 'Usuarios' */}
             <button
               onClick={() => handleSelect("usuarios")}
               className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
@@ -60,7 +124,6 @@ const AdminPage = () => {
               Usuarios
             </button>
 
-            {/* Botón para 'Menú' */}
             <button
               onClick={() => handleSelect("menu")}
               className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
@@ -72,7 +135,6 @@ const AdminPage = () => {
               Menú
             </button>
 
-            {/* Botón para 'Pedidos' */}
             <button
               onClick={() => handleSelect("pedidos")}
               className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
@@ -85,12 +147,21 @@ const AdminPage = () => {
             </button>
           </div>
 
-          <button
-            onClick={handleLogout}
-            className="mt-4 w-full text-left text-red-600 hover:bg-red-600 hover:text-white px-3 py-2 rounded cursor-pointer transition"
-          >
-            Cerrar sesión
-          </button>
+          {/* Botones al fondo */}
+          <div className="space-y-2 mt-auto">
+            <button
+              onClick={activarNuevoCurso}
+              className="w-full text-left px-3 py-2 rounded transition cursor-pointer text-yellow-700 hover:bg-yellow-200 bg-white"
+            >
+              🏫 Iniciar nuevo curso escolar
+            </button>
+            <button
+              onClick={handleLogout}
+              className="w-full text-left text-red-600 hover:bg-red-600 hover:text-white px-3 py-2 rounded cursor-pointer transition"
+            >
+              Cerrar sesión
+            </button>
+          </div>
         </aside>
 
         {/* CONTENIDO */}
