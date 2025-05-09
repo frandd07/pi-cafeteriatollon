@@ -7,14 +7,16 @@ import { UsuariosPanel } from "../components";
 import MenuPanel from "./MenuPanel";
 import HeaderSencillo from "@/components/Header/HeaderSencillo";
 import AdminPedidos from "./AdminPedidos";
+import HistorialPedidos from "./HistorialPedidos"; // ← Nuevo import
 import { Menu } from "lucide-react";
 import toast from "react-hot-toast";
 import { logoutUser } from "@/features/auth";
 
 const AdminPage = () => {
-  const [seccion, setSeccion] = useState<"usuarios" | "menu" | "pedidos">(
-    "usuarios"
-  );
+  // ✅ Añadimos "historial" al tipo de sección
+  const [seccion, setSeccion] = useState<
+    "usuarios" | "menu" | "pedidos" | "historial"
+  >("usuarios");
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const navigate = useNavigate();
 
@@ -28,7 +30,6 @@ const AdminPage = () => {
       const session = await supabase.auth.getSession();
       console.log("TOKEN DEL ADMIN:", session.data.session?.access_token);
     };
-
     mostrarToken();
   }, []);
 
@@ -53,11 +54,9 @@ const AdminPage = () => {
             <button
               onClick={async () => {
                 toast.dismiss(t.id);
-
                 try {
                   const session = await supabase.auth.getSession();
                   const token = session.data.session?.access_token;
-
                   const res = await fetch(
                     "http://localhost:3001/usuarios/iniciar-curso",
                     {
@@ -68,7 +67,6 @@ const AdminPage = () => {
                       },
                     }
                   );
-
                   if (res.ok) {
                     toast.success("Nuevo curso activado 🎓");
                   } else {
@@ -145,6 +143,18 @@ const AdminPage = () => {
             >
               Pedidos
             </button>
+
+            {/* Nuevo botón Historial */}
+            <button
+              onClick={() => handleSelect("historial")}
+              className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
+                seccion === "historial"
+                  ? "bg-[#ff6c6c] text-white"
+                  : "hover:bg-[#ff9c9c]"
+              }`}
+            >
+              Historial
+            </button>
           </div>
 
           {/* Botones al fondo */}
@@ -174,6 +184,7 @@ const AdminPage = () => {
             {seccion === "usuarios" && <UsuariosPanel />}
             {seccion === "menu" && <MenuPanel />}
             {seccion === "pedidos" && <AdminPedidos />}
+            {seccion === "historial" && <HistorialPedidos />} {/* ← Aquí */}
           </main>
         </div>
       </div>

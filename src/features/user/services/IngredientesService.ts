@@ -18,3 +18,16 @@ export const getIngredientes = async (): Promise<IngredientePrecio[]> => {
     return [];
   }
 };
+
+export const getIngredientesPorProducto = async (
+  productoId: number
+): Promise<IngredientePrecio[]> => {
+  const res = await fetch(`${API_URL}/ingredientes/producto/${productoId}`);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error);
+  return data.map((i: any) => ({
+    id: i.id,
+    nombre: i.nombre,
+    precio_extra: parseFloat(i.precio_extra),
+  }));
+};
