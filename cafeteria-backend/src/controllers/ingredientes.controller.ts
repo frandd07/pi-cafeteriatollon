@@ -80,3 +80,32 @@ export const eliminarIngrediente = async (
 
   res.status(200).json({ mensaje: "Ingrediente eliminado correctamente" });
 };
+
+export const getIngredientesPorProducto = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { productoId } = req.params;
+
+  const { data, error } = await supabase
+    .from("producto_ingrediente")
+    .select(
+      `
+      ingrediente:ingredientes (
+        id,
+        nombre,
+        precio_extra
+      )
+    `
+    )
+    .eq("producto_id", productoId);
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  // data viene como [{ ingrediente: { id, nombre, precio_extra } }, …]
+  const ingredientes = data.map((row) => row.ingrediente);
+  res.json(ingredientes);
+};
