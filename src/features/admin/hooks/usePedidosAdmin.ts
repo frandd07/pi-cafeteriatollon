@@ -41,15 +41,7 @@ export const usePedidosAdmin = () => {
 
   const actualizarEstado = async (pedidoId: number, nuevoEstado: string) => {
     await actualizarPedido(pedidoId, { estado: nuevoEstado });
-
-    if (nuevoEstado === "recogido") {
-      setTimeout(async () => {
-        await eliminarPedido(pedidoId);
-        fetchPedidos();
-      }, 3000);
-    } else {
-      fetchPedidos();
-    }
+    fetchPedidos();
   };
 
   const togglePagado = async (pedido: any) => {

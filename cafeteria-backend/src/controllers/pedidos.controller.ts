@@ -15,6 +15,25 @@ export const crearPedido = async (
       return;
     }
 
+    // ──────────── NUEVO: comprobar si el usuario debe actualizar curso ────────────
+    const { data: usuario, error: userError } = await supabase
+      .from("usuarios")
+      .select("debe_actualizar_curso")
+      .eq("id", usuario_id)
+      .single();
+
+    if (userError) {
+      res.status(500).json({ error: userError.message });
+      return;
+    }
+    if (usuario?.debe_actualizar_curso) {
+      res
+        .status(400)
+        .json({ error: "No puedes hacer pedidos hasta actualizar tu curso." });
+      return;
+    }
+    // ──────────────────────────────────────────────────────────────────────────────
+
     const total = productos.reduce(
       (acc: number, p: any) => acc + p.precio * p.cantidad,
       0
@@ -85,7 +104,7 @@ export const crearPedido = async (
           return {
             detalle_pedido_id: detallePedido.id,
             ingrediente_id: ing.id,
-            precio_extra: ingDB?.precio_extra ?? 0, // Fallback si no lo encuentra
+            precio_extra: ingDB?.precio_extra ?? 0,
           };
         });
 
