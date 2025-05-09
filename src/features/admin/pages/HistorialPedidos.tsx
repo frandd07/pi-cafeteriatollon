@@ -45,7 +45,7 @@ const HistorialPedidos: React.FC = () => {
         </div>
         <button
           onClick={reload}
-          className="self-end px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="cursor-pointer self-end px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           Filtrar
         </button>
