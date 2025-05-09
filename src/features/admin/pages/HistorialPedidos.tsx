@@ -1,70 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { supabase } from "@/supabaseClient";
+import { useState } from "react";
 import { Spinner } from "@/components/Spinner";
-import type { PedidoConUsuario } from "@/interfaces";
+import { useHistorialPedidos } from "../hooks/useHistorialPedidos";
 
 const HistorialPedidos: React.FC = () => {
-  const [startDate, setStartDate] = useState<string>(() =>
+  const [startDate, setStartDate] = useState(() =>
     new Date().toISOString().slice(0, 10)
   );
-  const [endDate, setEndDate] = useState<string>(() =>
+  const [endDate, setEndDate] = useState(() =>
     new Date().toISOString().slice(0, 10)
   );
-  const [pedidos, setPedidos] = useState<PedidoConUsuario[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const fetchHistorial = async () => {
-    setLoading(true);
-    setErrorMsg(null);
-
-    const from = `${startDate}T00:00:00`;
-    const to = `${endDate}T23:59:59`;
-
-    // Solo pedidos con estado "recogido"
-    const response = await supabase
-      .from("pedidos")
-      .select("id, creado_en, total, usuarios (nombre, apellido1, apellido2)")
-      .eq("estado", "recogido")
-      .gte("creado_en", from)
-      .lte("creado_en", to)
-      .order("creado_en", { ascending: false });
-
-    const rawData = response.data ?? [];
-    const error = response.error;
-
-    if (error) {
-      console.error("Error al cargar historial:", error);
-      setErrorMsg(error.message);
-      setPedidos([]);
-      setTotal(0);
-    } else {
-      // Convertimos usuarios: [...] → objeto único
-      const pedidosFormateados: PedidoConUsuario[] = rawData.map((p: any) => ({
-        id: p.id,
-        creado_en: p.creado_en,
-        total: p.total,
-        usuarios:
-          Array.isArray(p.usuarios) && p.usuarios[0]
-            ? p.usuarios[0]
-            : { nombre: "", apellido1: "", apellido2: "" },
-      }));
-
-      setPedidos(pedidosFormateados);
-      setTotal(
-        pedidosFormateados.reduce((sum, pedido) => sum + (pedido.total || 0), 0)
-      );
-    }
-
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchHistorial();
-  }, []);
+  const { pedidos, total, loading, errorMsg, reload } = useHistorialPedidos(
+    startDate,
+    endDate
+  );
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -93,7 +44,7 @@ const HistorialPedidos: React.FC = () => {
           />
         </div>
         <button
-          onClick={fetchHistorial}
+          onClick={reload}
           className="self-end px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           Filtrar
