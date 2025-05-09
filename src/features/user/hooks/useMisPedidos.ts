@@ -11,10 +11,18 @@ export const useMisPedidos = () => {
   const [loading, setLoading] = useState(true);
 
   const fetchPedidos = async () => {
+    // 1️⃣ recuperar el userId
     const userId = localStorage.getItem("userId");
-    if (!userId) return;
+    if (!userId) {
+      setPedidos([]);
+      setLoading(false);
+      return;
+    }
+
+    // 2️⃣ cargar pedidos y ocultar los “recogidos”
     const data = await obtenerPedidosDelUsuario(userId);
-    setPedidos(data);
+    const visibles = data.filter((pedido: any) => pedido.estado !== "recogido");
+    setPedidos(visibles);
     setLoading(false);
   };
 
