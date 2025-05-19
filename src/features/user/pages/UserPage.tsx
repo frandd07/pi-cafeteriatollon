@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/supabaseClient";
 import { useNavigate } from "react-router-dom";
-import { MenuCliente, CarritoCliente, MisPedidos } from "../components";
+import {
+  MenuCliente,
+  CarritoCliente,
+  MisPedidos,
+  PerfilUsuario,
+} from "../components";
 import HeaderSencillo from "@/components/Header/HeaderSencillo";
 import { Menu } from "lucide-react";
 import { useRedireccionCurso } from "@/features/auth";
-import PerfilUsuario from "../components/PerfilUsuario";
+
 import { logoutUser } from "@/features/auth";
 
 const UserPage = () => {
