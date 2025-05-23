@@ -24,7 +24,7 @@ export const useCarritoCliente = () => {
     try {
       const pedidoId = await crearPedido(carrito as ProductoCarrito[], recreo);
       // suponemos que crearPedido lanza si hay 400
-      toast.success("✅ Pedido confirmado correctamente");
+      toast.success("Pedido confirmado correctamente");
       vaciarCarrito();
       return pedidoId;
     } catch (err: any) {

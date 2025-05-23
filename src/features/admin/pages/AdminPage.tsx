@@ -119,7 +119,7 @@ const AdminPage = () => {
                   : "bg-gray-100 hover:bg-[#ff9c9c]"
               }`}
             >
-              Usuarios
+              👥 Usuarios
             </button>
 
             <button
@@ -127,10 +127,10 @@ const AdminPage = () => {
               className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
                 seccion === "menu"
                   ? "bg-[#ff6c6c] text-white"
-                  : "hover:bg-[#ff9c9c]"
+                  : "bg-gray-100 hover:bg-[#ff9c9c]"
               }`}
             >
-              Menú
+              🍽️ Menú
             </button>
 
             <button
@@ -138,10 +138,10 @@ const AdminPage = () => {
               className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
                 seccion === "pedidos"
                   ? "bg-[#ff6c6c] text-white"
-                  : "hover:bg-[#ff9c9c]"
+                  : "bg-gray-100 hover:bg-[#ff9c9c]"
               }`}
             >
-              Pedidos
+              📦 Pedidos
             </button>
 
             {/* Nuevo botón Historial */}
@@ -150,10 +150,10 @@ const AdminPage = () => {
               className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
                 seccion === "historial"
                   ? "bg-[#ff6c6c] text-white"
-                  : "hover:bg-[#ff9c9c]"
+                  : "bg-gray-100 hover:bg-[#ff9c9c]"
               }`}
             >
-              Historial
+              📜 Historial
             </button>
           </div>
 
@@ -169,7 +169,7 @@ const AdminPage = () => {
               onClick={handleLogout}
               className="w-full text-left text-red-600 hover:bg-red-600 hover:text-white px-3 py-2 rounded cursor-pointer transition"
             >
-              Cerrar sesión
+              🔒 Cerrar sesión
             </button>
           </div>
         </aside>

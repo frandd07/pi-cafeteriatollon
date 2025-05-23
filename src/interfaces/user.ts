@@ -20,3 +20,12 @@ export interface Usuario {
   verificado: boolean;
   debe_actualizar_curso: boolean;
 }
+
+export interface PerfilData {
+  curso: string;
+  debe_actualizar_curso: boolean;
+  nombre: string;
+  apellido1: string;
+  email: string;
+  verificado: boolean;
+}

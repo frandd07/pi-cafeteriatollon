@@ -23,6 +23,7 @@ export function useHistorialPedidos(
 
     const from = `${startDate}T00:00:00`;
     const to = `${endDate}T23:59:59`;
+
     const { data, error } = await fetchPedidosRecogidos(from, to);
 
     if (error) {

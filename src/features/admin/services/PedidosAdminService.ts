@@ -20,33 +20,48 @@ export async function fetchPedidosRecogidos(
   from: string,
   to: string
 ): Promise<{ data: PedidoConUsuario[]; error: string | null }> {
-  // Ejecutamos la consulta
   const { data, error } = await supabase
     .from("pedidos")
-    .select("id, creado_en, total, usuarios (nombre, apellido1, apellido2)")
+    .select(
+      `
+      id,
+      creado_en,
+      total,
+      usuario_id,
+      usuarios (
+        nombre,
+        apellido1,
+        apellido2
+      )
+    `
+    )
     .eq("estado", "recogido")
     .gte("creado_en", from)
     .lte("creado_en", to)
     .order("creado_en", { ascending: false });
 
-  // Convertimos posibles null/undefined en array vacío
-  const rawData: any[] = data ?? [];
-
   if (error) {
-    console.error("Error al cargar historial:", error);
+    console.error("Error al cargar historial:", error.message);
     return { data: [], error: error.message };
   }
 
-  // Formateamos resultados
-  const pedidosFormateados: PedidoConUsuario[] = rawData.map((p: any) => ({
-    id: p.id,
-    creado_en: p.creado_en,
-    total: p.total,
-    usuarios:
-      Array.isArray(p.usuarios) && p.usuarios[0]
-        ? p.usuarios[0]
-        : { nombre: "", apellido1: "", apellido2: "" },
-  }));
+  const rawData: any[] = data ?? [];
+
+  const pedidosFormateados: PedidoConUsuario[] = rawData.map((p: any) => {
+    const usuarioRaw = p.usuarios;
+    const usuarioFinal = usuarioRaw
+      ? Array.isArray(usuarioRaw)
+        ? usuarioRaw[0]
+        : usuarioRaw
+      : { nombre: "", apellido1: "", apellido2: "" };
+
+    return {
+      id: p.id,
+      creado_en: p.creado_en,
+      total: p.total,
+      usuarios: usuarioFinal,
+    };
+  });
 
   return { data: pedidosFormateados, error: null };
 }

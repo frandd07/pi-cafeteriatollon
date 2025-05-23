@@ -169,3 +169,48 @@ export const eliminarUsuariosMasivo = async (
 
   res.status(200).json({ success: true });
 };
+
+export const actualizarUsuario = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+  const updates = req.body;
+
+  const { error } = await supabase
+    .from("usuarios")
+    .update(updates)
+    .eq("id", id);
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  res.status(200).json({ success: true });
+};
+
+export const getUsuarioPorId = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+  const { data, error } = await supabase
+    .from("usuarios")
+    .select(
+      "id, nombre, apellido1, apellido2, email, tipo, curso, verificado, debe_actualizar_curso"
+    )
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+  if (!data) {
+    res.status(404).json({ error: "Usuario no encontrado" });
+    return;
+  }
+
+  res.status(200).json(data);
+};
