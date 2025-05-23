@@ -82,7 +82,7 @@ const HistorialPedidos: React.FC = () => {
                   {new Date(p.creado_en).toLocaleString("es-ES")}
                 </td>
                 <td className="p-2 border">
-                  {p.usuarios.nombre} {p.usuarios.apellido1}
+                  {p.usuarios?.nombre || "—"} {p.usuarios?.apellido1 || ""}
                 </td>
                 <td className="p-2 border text-right">{p.total.toFixed(2)}</td>
               </tr>

@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/supabaseClient";
 import { useNavigate } from "react-router-dom";
-import { MenuCliente, CarritoCliente, MisPedidos } from "../components";
+import {
+  MenuCliente,
+  CarritoCliente,
+  MisPedidos,
+  PerfilUsuario,
+} from "../components";
 import HeaderSencillo from "@/components/Header/HeaderSencillo";
 import { Menu } from "lucide-react";
 import { useRedireccionCurso } from "@/features/auth";
-import PerfilUsuario from "../components/PerfilUsuario";
+
 import { logoutUser } from "@/features/auth";
 
 const UserPage = () => {
@@ -50,25 +54,41 @@ const UserPage = () => {
           <div className="space-y-2">
             <button
               onClick={() => handleSelect("menu")}
-              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600 cursor-pointer"
+              className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
+                seccion === "menu"
+                  ? "bg-[#ff6c6c] text-white"
+                  : "bg-gray-100 hover:bg-[#ff9c9c] text-black"
+              }`}
             >
               🍽️ Menú
             </button>
             <button
               onClick={() => handleSelect("carrito")}
-              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600 cursor-pointer"
+              className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
+                seccion === "carrito"
+                  ? "bg-[#ff6c6c] text-white"
+                  : "bg-gray-100 hover:bg-[#ff9c9c] text-black"
+              }`}
             >
               🛒 Carrito
             </button>
             <button
               onClick={() => handleSelect("pedidos")}
-              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600 cursor-pointer"
+              className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
+                seccion === "pedidos"
+                  ? "bg-[#ff6c6c] text-white"
+                  : "bg-gray-100 hover:bg-[#ff9c9c] text-black"
+              }`}
             >
               📦 Mis pedidos
             </button>
             <button
               onClick={() => handleSelect("perfil")}
-              className="w-full text-left hover:bg-blue-100 px-3 py-2 rounded transition text-blue-600 cursor-pointer"
+              className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
+                seccion === "perfil"
+                  ? "bg-[#ff6c6c] text-white"
+                  : "bg-gray-100 hover:bg-[#ff9c9c] text-black"
+              }`}
             >
               👤 Perfil
             </button>
@@ -76,9 +96,9 @@ const UserPage = () => {
 
           <button
             onClick={handleLogout}
-            className="mt-4 w-full text-left text-red-600 hover:bg-red-600 hover:text-white px-3 py-2 rounded transition"
+            className="mt-4 w-full text-left text-red-600 hover:bg-red-600 hover:text-white px-3 py-2 rounded transition cursor-pointer"
           >
-            Cerrar sesión
+            🔒 Cerrar sesión
           </button>
         </aside>
 
