@@ -4,7 +4,7 @@ interface RegisterPayload extends User {
   password: string;
 }
 
-const API_URL = "http://localhost:3001";
+const API_URL = import.meta.env.VITE_API_URL;
 
 // 🔐 Registro
 export const registerUser = async (payload: RegisterPayload) => {
