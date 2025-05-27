@@ -20,7 +20,7 @@ export const useLogin = () => {
           "Tu cuenta aún no ha sido verificada por el administrador."
         );
       } else {
-        toast.error("❌ " + res.error);
+        toast.error("" + res.error);
       }
       setMessage("");
     } else if (res?.data?.perfil?.tipo) {
