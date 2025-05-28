@@ -50,7 +50,7 @@ export const loginUser = async (email: string, password: string) => {
 
     localStorage.setItem("userId", data.user.id);
     localStorage.setItem("rol", perfil.tipo);
-    localStorage.setItem("token", data.session.access_token); // ✅ IMPORTANTE
+    localStorage.setItem("token", data.session.access_token);
     console.log("Login exitoso. userId guardado:", data.user.id);
 
     return {

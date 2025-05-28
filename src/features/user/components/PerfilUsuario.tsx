@@ -117,7 +117,7 @@ const PerfilUsuario: React.FC = () => {
             <button
               onClick={handleGuardar}
               disabled={guardando}
-              className={`w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all text-lg ${
+              className={`cursor-pointer w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all text-lg ${
                 guardando ? "opacity-75 cursor-not-allowed" : ""
               }`}
             >

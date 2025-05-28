@@ -8,7 +8,6 @@ import type { ProductoCarrito, Recreo } from "@/interfaces";
 
 const MisPedidos: React.FC = () => {
   const { pedidos, loading, hacerPedido, eliminarPedido } = useMisPedidos();
-
   const [recreo] = useState<Recreo>("primer");
   const [productosSeleccionados, setProductosSeleccionados] = useState<
     ProductoCarrito[]
@@ -28,15 +27,11 @@ const MisPedidos: React.FC = () => {
     }
 
     try {
-      const id = await hacerPedido(productosSeleccionados, recreo);
+      await hacerPedido(productosSeleccionados, recreo);
       toast.success("✅ Pedido realizado con éxito");
       setProductosSeleccionados([]);
     } catch (err: any) {
-      // Loguear el mensaje de error exacto
-      console.log("🛑 err.message ->", err.message);
       const msg = err.message || "";
-
-      // Detectar error de curso usando includes
       if (msg.includes("actualizar tu curso")) {
         toast.error("🚨 Debes actualizar tu curso antes de realizar pedidos");
       } else {
@@ -47,7 +42,6 @@ const MisPedidos: React.FC = () => {
 
   return (
     <>
-      {/* El Toaster siempre debe estar montado en root, pero aquí reforzamos z-index */}
       <Toaster
         position="top-right"
         reverseOrder={false}
@@ -60,14 +54,12 @@ const MisPedidos: React.FC = () => {
         </div>
       ) : (
         <div className="max-w-5xl mx-auto py-8 px-4">
-          {/* Cabecera */}
           <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-xl shadow-lg p-6 mb-8">
             <h2 className="text-2xl font-bold">
               Mis Pedidos ({pedidos.length})
             </h2>
           </div>
 
-          {/* Lista de pedidos */}
           <div className="space-y-6">
             {pedidos.length > 0 ? (
               pedidos.map((pedido) => (
@@ -75,7 +67,6 @@ const MisPedidos: React.FC = () => {
                   key={pedido.id}
                   className="border border-gray-200 rounded-xl shadow-lg bg-white hover:shadow-xl transition-all duration-300 overflow-hidden"
                 >
-                  {/* Barra de estado */}
                   <div
                     className={`h-2 w-full ${
                       pedido.estado === "pendiente"
@@ -90,7 +81,6 @@ const MisPedidos: React.FC = () => {
                     }`}
                   />
 
-                  {/* Header */}
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-6 border-b border-gray-100">
                     <div className="flex items-start">
                       <div
@@ -148,7 +138,6 @@ const MisPedidos: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Detalles */}
                   <div className="p-6">
                     <h4 className="font-medium text-gray-700 mb-3">
                       Productos
@@ -191,7 +180,6 @@ const MisPedidos: React.FC = () => {
                     </ul>
                   </div>
 
-                  {/* Footer */}
                   <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
                     <span className="text-sm text-gray-500">
                       {pedido.detalle_pedido.reduce(

@@ -18,14 +18,12 @@ export const useUsuariosPanel = () => {
   >("todos");
   const [busqueda, setBusqueda] = useState("");
 
-  // --- NUEVO filtro de estado ---
   type EstadoFiltro =
     | "todos"
     | "noVerificados"
     | "debenActualizar"
     | "normales";
   const [filtroEstado, setFiltroEstado] = useState<EstadoFiltro>("todos");
-  // --------------------------------
 
   const fetchUsuarios = async () => {
     setLoading(true);
@@ -72,10 +70,10 @@ export const useUsuariosPanel = () => {
     const success = await eliminarUsuarioService(id);
     toast.dismiss(toastId);
     if (success) {
-      toast.success("✅ Usuario eliminado correctamente");
+      toast.success("Usuario eliminado correctamente");
       fetchUsuarios();
     } else {
-      toast.error("❌ Error al eliminar el usuario");
+      toast.error("Error al eliminar el usuario");
     }
   };
 
