@@ -110,7 +110,11 @@ const UserPage = () => {
 
           <main className="p-6 overflow-y-auto flex-1 bg-white">
             {seccion === "menu" && <MenuCliente />}
-            {seccion === "carrito" && <CarritoCliente />}
+            {seccion === "carrito" && (
+              <CarritoCliente
+                onPedidoConfirmado={() => setSeccion("pedidos")}
+              />
+            )}
             {seccion === "pedidos" && <MisPedidos />}
             {seccion === "perfil" && <PerfilUsuario />}
           </main>
