@@ -57,7 +57,7 @@ export const eliminarUsuariosMasivo = async (
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`, // ✅ Esto es clave para pasar esAdmin
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ ids }),
   });

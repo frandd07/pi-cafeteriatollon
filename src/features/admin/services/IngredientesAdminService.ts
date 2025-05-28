@@ -1,4 +1,3 @@
-// src/services/ingredientesAdminService.ts
 import { Ingrediente } from "@/interfaces";
 const API_URL = import.meta.env.VITE_API_URL;
 
