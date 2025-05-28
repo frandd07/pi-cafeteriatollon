@@ -45,10 +45,6 @@ export const usePedidosAdmin = () => {
   };
 
   const togglePagado = async (pedido: any) => {
-    if (pedido.estado !== "aceptado") {
-      toast.error("El pedido debe ser aceptado antes de marcarlo como pagado.");
-      return;
-    }
     await actualizarPedido(pedido.id, { pagado: !pedido.pagado });
     fetchPedidos();
   };
