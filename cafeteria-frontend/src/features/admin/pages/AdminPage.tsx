@@ -99,16 +99,16 @@ const AdminPage = () => {
           </div>
 
           {/* Botones al fondo */}
-          <div className="space-y-2 mt-auto">
+          <div className="space-y-0 mt-auto mb-10 md:mb-0">
             <button
               onClick={activarNuevoCurso}
-              className="w-full text-left px-3 py-2 rounded transition cursor-pointer text-yellow-700 hover:bg-yellow-200 bg-white"
+              className="w-full text-left px-3 py-8 md:py-2 rounded transition cursor-pointer text-yellow-700 hover:bg-yellow-200"
             >
               🏫 Iniciar nuevo curso escolar
             </button>
             <button
               onClick={handleLogout}
-              className="w-full text-left text-red-600 hover:bg-red-600 hover:text-white px-3 py-2 rounded cursor-pointer transition"
+              className="w-full text-left px-3 py-8 md:py-2 rounded cursor-pointer transition text-red-600 hover:bg-red-600 hover:text-white -mt-2"
             >
               🔒 Cerrar sesión
             </button>

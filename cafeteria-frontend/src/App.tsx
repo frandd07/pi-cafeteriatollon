@@ -6,6 +6,7 @@ import routes from "./routes/routes";
 import { UserPage } from "./features/user";
 import { Toaster } from "react-hot-toast";
 import { AdminPage } from "./features/admin/pages";
+import ConfirmationPage from "./features/confirmPage/confirmationPage";
 
 // Rutas protegidas
 import ClienteRoute from "./components/ClienteRouter";
@@ -20,6 +21,10 @@ export default function App() {
           <Route path={routes.home} element={<LandingPage />} />
           <Route path={routes.login} element={<LoginPage />} />
           <Route path={routes.register} element={<RegisterPage />} />
+          <Route
+            path={routes.confirmationSuccess}
+            element={<ConfirmationPage />}
+          />
 
           {/* Ruta protegida para cliente */}
           <Route

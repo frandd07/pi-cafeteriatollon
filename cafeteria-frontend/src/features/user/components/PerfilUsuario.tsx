@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Spinner } from "@/components/Spinner";
 import { usePerfilUsuario } from "../hooks/usePerfilUsuario";
 
 const PerfilUsuario: React.FC = () => {
@@ -25,11 +26,8 @@ const PerfilUsuario: React.FC = () => {
 
   if (cargando) {
     return (
-      <div className="min-h-[300px] flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-t-blue-600 border-b-blue-300 border-l-blue-300 border-r-blue-300 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 font-medium">Cargando perfil...</p>
-        </div>
+      <div className="flex justify-center items-center h-64">
+        <Spinner />
       </div>
     );
   }
@@ -56,9 +54,11 @@ const PerfilUsuario: React.FC = () => {
         <div className="h-24 w-24 rounded-full flex items-center justify-center bg-white text-[#fa6a69] text-3xl font-bold mr-6 shadow-lg">
           {iniciales}
         </div>
-        <div className="text-white">
-          <h2 className="text-3xl font-semibold">{nombreCompleto}</h2>
-          <p className="text-white opacity-90 text-lg">
+        <div className="text-white flex-1 min-w-0">
+          <h2 className="text-3xl font-semibold break-words">
+            {nombreCompleto}
+          </h2>
+          <p className="text-white opacity-90 text-lg break-all whitespace-normal">
             {perfil.email || "Sin correo"}
           </p>
         </div>
