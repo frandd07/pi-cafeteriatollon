@@ -8,7 +8,7 @@ export const obtenerPerfilUsuario = async (
   const res = await fetch(`${API_URL}/usuarios/${userId}`, {
     headers: {
       "Content-Type": "application/json",
-      // Si tu GET también requiere autenticación, descomenta:
+      // Si GET también requiere autenticación,
       // Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });

@@ -26,15 +26,6 @@ const AdminPage = () => {
     navigate("/login");
   };
 
-  // Si aún quieres mostrar el token en consola, puedes dejar este efecto:
-  useEffect(() => {
-    import("@/supabaseClient")
-      .then(({ supabase }) => supabase.auth.getSession())
-      .then(({ data }) =>
-        console.log("TOKEN DEL ADMIN:", data.session?.access_token)
-      );
-  }, []);
-
   const handleSelect = (opcion: typeof seccion) => {
     setSeccion(opcion);
     setSidebarVisible(false); // Oculta la sidebar en móvil
