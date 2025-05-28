@@ -7,13 +7,12 @@ import { UsuariosPanel } from "../components";
 import MenuPanel from "./MenuPanel";
 import HeaderSencillo from "@/components/Header/HeaderSencillo";
 import AdminPedidos from "./AdminPedidos";
-import HistorialPedidos from "./HistorialPedidos"; // ← Nuevo import
+import HistorialPedidos from "./HistorialPedidos";
 import { Menu } from "lucide-react";
 import toast from "react-hot-toast";
 import { logoutUser } from "@/features/auth";
 
 const AdminPage = () => {
-  // ✅ Añadimos "historial" al tipo de sección
   const [seccion, setSeccion] = useState<
     "usuarios" | "menu" | "pedidos" | "historial"
   >("usuarios");
@@ -184,7 +183,7 @@ const AdminPage = () => {
             {seccion === "usuarios" && <UsuariosPanel />}
             {seccion === "menu" && <MenuPanel />}
             {seccion === "pedidos" && <AdminPedidos />}
-            {seccion === "historial" && <HistorialPedidos />} {/* ← Aquí */}
+            {seccion === "historial" && <HistorialPedidos />}
           </main>
         </div>
       </div>
