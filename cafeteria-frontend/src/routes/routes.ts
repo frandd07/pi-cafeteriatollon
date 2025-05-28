@@ -5,6 +5,7 @@ const routes = {
   menu: "/menu",
   pedidos: "/pedidos",
   admin: "/admin",
+  confirmationSuccess: "/confirmation-success",
 };
 
 export default routes;

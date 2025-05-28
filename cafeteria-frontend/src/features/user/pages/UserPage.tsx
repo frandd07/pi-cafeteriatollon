@@ -47,7 +47,7 @@ const UserPage = () => {
       <div className="flex flex-1 overflow-hidden relative">
         {/* SIDEBAR */}
         <aside
-          className={`absolute sm:static top-0 left-0 h-full sm:h-auto w-64 bg-gray-100 p-4 flex flex-col justify-between z-40 transition-transform transform ${
+          className={`absolute sm:static top-0 left-0 h-full sm:h-auto w-64 bg-gray-100 p-4 pb-24 sm:pb-4 flex flex-col justify-between z-40 transition-transform transform ${
             sidebarVisible ? "translate-x-0" : "-translate-x-full"
           } sm:translate-x-0`}
         >
