@@ -1,16 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/supabaseClient";
 import { useNavigate } from "react-router-dom";
+
+import HeaderSencillo from "@/components/Header/HeaderSencillo";
 import { UsuariosPanel } from "../components";
 import MenuPanel from "./MenuPanel";
-import HeaderSencillo from "@/components/Header/HeaderSencillo";
 import AdminPedidos from "./AdminPedidos";
 import HistorialPedidos from "./HistorialPedidos";
+
 import { Menu } from "lucide-react";
-import toast from "react-hot-toast";
 import { logoutUser } from "@/features/auth";
+import { useNuevoCurso } from "../hooks";
 
 const AdminPage = () => {
   const [seccion, setSeccion] = useState<
@@ -18,74 +19,25 @@ const AdminPage = () => {
   >("usuarios");
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const navigate = useNavigate();
+  const { activar: activarNuevoCurso } = useNuevoCurso();
 
   const handleLogout = async () => {
     await logoutUser();
     navigate("/login");
   };
 
+  // Si aún quieres mostrar el token en consola, puedes dejar este efecto:
   useEffect(() => {
-    const mostrarToken = async () => {
-      const session = await supabase.auth.getSession();
-      console.log("TOKEN DEL ADMIN:", session.data.session?.access_token);
-    };
-    mostrarToken();
+    import("@/supabaseClient")
+      .then(({ supabase }) => supabase.auth.getSession())
+      .then(({ data }) =>
+        console.log("TOKEN DEL ADMIN:", data.session?.access_token)
+      );
   }, []);
 
   const handleSelect = (opcion: typeof seccion) => {
     setSeccion(opcion);
     setSidebarVisible(false); // Oculta la sidebar en móvil
-  };
-
-  const activarNuevoCurso = async () => {
-    toast(
-      (t) => (
-        <span className="flex flex-col gap-2">
-          ¿Iniciar un nuevo curso escolar? <br />
-          Esto hará que todos los alumnos deban actualizar su curso.
-          <div className="flex justify-end gap-2 mt-2">
-            <button
-              onClick={() => toast.dismiss(t.id)}
-              className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400"
-            >
-              Cancelar
-            </button>
-            <button
-              onClick={async () => {
-                toast.dismiss(t.id);
-                try {
-                  const session = await supabase.auth.getSession();
-                  const token = session.data.session?.access_token;
-                  const res = await fetch(
-                    "http://localhost:3001/usuarios/iniciar-curso",
-                    {
-                      method: "PUT",
-                      headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                      },
-                    }
-                  );
-                  if (res.ok) {
-                    toast.success("Nuevo curso activado 🎓");
-                  } else {
-                    const { error } = await res.json();
-                    toast.error(`Error al activar curso: ${error}`);
-                  }
-                } catch (error) {
-                  toast.error("Error inesperado");
-                  console.error("Error:", error);
-                }
-              }}
-              className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-            >
-              Confirmar
-            </button>
-          </div>
-        </span>
-      ),
-      { duration: 10000 }
-    );
   };
 
   return (
@@ -143,7 +95,6 @@ const AdminPage = () => {
               📦 Pedidos
             </button>
 
-            {/* Nuevo botón Historial */}
             <button
               onClick={() => handleSelect("historial")}
               className={`w-full text-left px-3 py-2 rounded transition cursor-pointer ${
