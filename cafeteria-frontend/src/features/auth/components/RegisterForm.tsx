@@ -2,6 +2,30 @@ import { useRegister } from "../hooks/useRegister";
 
 const RegisterForm = () => {
   const { form, handleChange, handleSubmit, message } = useRegister();
+  const cursosDisponibles = [
+    "1º ESO A",
+    "1º ESO B",
+    "1º ESO C",
+    "1º ESO D",
+    "2º ESO A",
+    "2º ESO B",
+    "2º ESO C",
+    "2º ESO D",
+    "3º ESO A",
+    "3º ESO B",
+    "3º ESO C",
+    "3º ESO D",
+    "4º ESO A",
+    "4º ESO B",
+    "4º ESO C",
+    "4º ESO D",
+    "1º Bachillerato",
+    "2º Bachillerato",
+    "1º SMR",
+    "2º SMR",
+    "1º DAM",
+    "2º DAM",
+  ];
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -222,6 +246,7 @@ const RegisterForm = () => {
           </label>
           <div className="relative rounded-md shadow-sm">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              {/* Ícono */}
               <svg
                 className="text-gray-400"
                 xmlns="http://www.w3.org/2000/svg"
@@ -238,14 +263,38 @@ const RegisterForm = () => {
                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
               </svg>
             </div>
-            <input
+            <select
               id="curso"
-              type="text"
               name="curso"
-              placeholder="Ej: 2º ESO A"
+              value={form.curso}
+              required
               onChange={handleChange}
-              className="border border-gray-300 pl-10 pr-4 py-3 rounded-lg w-full focus:ring-2 focus:ring-[#fa6a69] focus:border-[#fa6a69] outline-none transition-all"
-            />
+              className="border border-gray-300 pl-10 pr-4 py-3 rounded-lg w-full focus:ring-2 focus:ring-[#fa6a69] focus:border-[#fa6a69] outline-none transition-all appearance-none bg-white"
+            >
+              <option value="">Selecciona tu curso</option>
+              {cursosDisponibles.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              {/* Flecha abajo */}
+              <svg
+                className="text-gray-400"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
           </div>
         </div>
       )}
