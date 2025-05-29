@@ -34,13 +34,24 @@ export const loginUser = async (email: string, password: string) => {
       password,
     });
 
-    if (error || !data.session || !data.user) {
-      throw new Error("Correo o contraseña incorrectos");
+    if (error) {
+      const msg = error.message.toLowerCase();
+      if (msg.includes("not confirmed") || msg.includes("confirm")) {
+        throw new Error(
+          "Debes verificar tu cuenta. Revisa tu correo y haz clic en el enlace de confirmación."
+        );
+      }
+      throw new Error("Correo o contraseña incorrectos.");
     }
 
+    if (!data.session || !data.user) {
+      throw new Error("Correo o contraseña incorrectos.");
+    }
+
+    // 🚀 Obtenemos el perfil desde la tabla usuarios
     const { data: perfil, error: perfilError } = await supabase
       .from("usuarios")
-      .select("*")
+      .select("id, tipo, verificado") // Asegúrate de traer el campo verificado
       .eq("id", data.user.id)
       .single();
 
@@ -48,6 +59,14 @@ export const loginUser = async (email: string, password: string) => {
       throw new Error("No se pudo obtener el perfil del usuario");
     }
 
+    // ❌ Si no está verificado por el admin, bloqueamos el acceso
+    if (!perfil.verificado) {
+      throw new Error(
+        "Tu cuenta aún no ha sido verificada por un administrador."
+      );
+    }
+
+    // 💾 Guardamos datos en localStorage
     localStorage.setItem("userId", data.user.id);
     localStorage.setItem("rol", perfil.tipo);
     localStorage.setItem("token", data.session.access_token);
