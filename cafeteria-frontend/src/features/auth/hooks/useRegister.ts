@@ -31,7 +31,7 @@ export const useRegister = () => {
     if (res?.error) {
       setMessage("❌ " + res.error);
     } else {
-      setMessage("✅ Registro exitoso. Confirma tu cuenta");
+      setMessage("Registro exitoso. Confirma tu cuenta");
       setTimeout(() => {
         navigate("/login");
       }, 1500);
