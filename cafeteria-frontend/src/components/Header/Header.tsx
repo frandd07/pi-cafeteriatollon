@@ -21,8 +21,8 @@ const Header = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Logo />
-        <NavigationMenu />
+        <Logo scrolled={scrolled} />
+        <NavigationMenu scrolled={scrolled} />
         <MobileMenuButton
           menuAbierto={menuAbierto}
           setMenuAbierto={setMenuAbierto}
