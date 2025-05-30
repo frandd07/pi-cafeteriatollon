@@ -56,7 +56,9 @@ const LandingPage = () => {
           </p>
 
           <div className="w-full flex justify-start">
-            <button
+            <a
+              href="/cafeteria_ies_laguna_tollon.apk"
+              download
               className={`bg-white text-[#fa6a69] px-8 py-4 rounded-full font-extrabold text-lg hover:opacity-90 transition shadow-lg flex items-center gap-2 ${
                 hoveredButton === "discover-more" ? "scale-105" : ""
               }`}
@@ -70,7 +72,7 @@ const LandingPage = () => {
                   hoveredButton === "discover-more" ? "rotate-12" : ""
                 }`}
               />
-            </button>
+            </a>
           </div>
         </div>
 
