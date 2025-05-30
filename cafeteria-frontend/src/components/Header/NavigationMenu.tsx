@@ -2,12 +2,18 @@ import { Link } from "react-router-dom";
 import routes from "@/routes/routes";
 import { UserPlus } from "lucide-react";
 
-const NavigationMenu = () => {
+interface NavigationMenuProps {
+  scrolled: boolean;
+}
+
+const NavigationMenu = ({ scrolled }: NavigationMenuProps) => {
   return (
     <nav className="hidden sm:flex items-center gap-4">
       <Link
         to={routes.login}
-        className="flex items-center gap-2 bg-white/90 text-[#fa6a69] font-semibold px-4 py-2 rounded-lg hover:bg-white transition hover:shadow-md"
+        className={`flex items-center gap-2 font-semibold px-4 py-2 rounded-lg hover:bg-white transition hover:shadow-md ${
+          scrolled ? "bg-white text-[#ff5c64]" : "bg-white/90 text-[#fa6a69]"
+        }`}
         aria-label="Iniciar sesión"
       >
         Iniciar sesión
