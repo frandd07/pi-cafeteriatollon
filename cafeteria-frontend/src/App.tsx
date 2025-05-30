@@ -11,12 +11,14 @@ import ConfirmationPage from "./features/confirmPage/confirmationPage";
 // Rutas protegidas
 import ClienteRoute from "./components/ClienteRouter";
 import AdminRoute from "./components/AdminRoute";
+import ScrollToTop from "./features/landing/components/ScrollToTop";
 
 export default function App() {
   return (
     <CarritoProvider>
       <Toaster position="top-right" reverseOrder={false} />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path={routes.home} element={<LandingPage />} />
           <Route path={routes.login} element={<LoginPage />} />
