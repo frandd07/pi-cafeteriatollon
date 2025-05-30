@@ -85,7 +85,7 @@ const UsuariosPanel = () => {
             <option value="todos">Todos los estados</option>
             <option value="noVerificados">No verificados</option>
             <option value="debenActualizar">Por actualizar</option>
-            <option value="normales">Normales</option>
+            <option value="normales">Al día</option>
           </select>
         </div>
       </div>
