@@ -22,7 +22,7 @@ const HeaderSencillo = () => {
 
   return (
     <header className="w-full z-10 bg-[#fa6a69] shadow-md py-4">
-      <div className="container mx-auto px-4 flex items-center">
+      <div className="w-full px-4 sm:px-6 lg:px-8 flex items-center">
         {rutasClickables.includes(pathname) ? (
           <Link to="/" aria-label="Ir al inicio">
             <Logo />
