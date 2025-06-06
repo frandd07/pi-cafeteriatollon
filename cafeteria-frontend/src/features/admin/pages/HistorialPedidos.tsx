@@ -71,6 +71,7 @@ const HistorialPedidos: React.FC = () => {
               <th className="p-2 border">ID</th>
               <th className="p-2 border">Fecha</th>
               <th className="p-2 border">Usuario</th>
+              <th className="p-2 border">Contenido</th>
               <th className="p-2 border">Total (€)</th>
             </tr>
           </thead>
@@ -83,6 +84,24 @@ const HistorialPedidos: React.FC = () => {
                 </td>
                 <td className="p-2 border">
                   {p.usuarios?.nombre || "—"} {p.usuarios?.apellido1 || ""}
+                </td>
+                <td className="p-2 border">
+                  <ul className="list-disc pl-4">
+                    {p.detalle_pedido.map((d) => (
+                      <li key={d.id}>
+                        {d.productos?.nombre || "Producto"} x{d.cantidad}
+                        {d.detalle_ingrediente.length > 0 && (
+                          <span>
+                            {" ("}
+                            {d.detalle_ingrediente
+                              .map((di) => di.ingredientes?.nombre)
+                              .join(", ")}
+                            {")"}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
                 </td>
                 <td className="p-2 border text-right">{p.total.toFixed(2)}</td>
               </tr>

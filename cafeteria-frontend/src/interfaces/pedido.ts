@@ -7,4 +7,21 @@ export interface PedidoConUsuario {
     apellido1: string;
     apellido2: string;
   };
+  detalle_pedido: DetallePedidoHistorial[];
+}
+
+export interface DetalleIngredienteHistorial {
+  precio_extra: number;
+  ingredientes: {
+    nombre: string;
+  };
+}
+
+export interface DetallePedidoHistorial {
+  id: number;
+  cantidad: number;
+  productos: {
+    nombre: string;
+  };
+  detalle_ingrediente: DetalleIngredienteHistorial[];
 }
