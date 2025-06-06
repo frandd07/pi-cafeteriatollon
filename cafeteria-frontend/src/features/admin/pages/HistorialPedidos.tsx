@@ -18,7 +18,7 @@ const HistorialPedidos: React.FC = () => {
   );
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="w-full px-2">
       <h2 className="text-2xl font-bold mb-4">
         📜 Historial de Pedidos Recogidos
       </h2>

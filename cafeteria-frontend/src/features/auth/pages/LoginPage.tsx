@@ -27,9 +27,7 @@ const LoginPage = () => {
           <h2 className="text-center text-3xl font-bold text-gray-800 mb-2">
             Iniciar Sesión
           </h2>
-          <p className="text-center text-gray-600 mb-8">
-            Accede a tu cuenta para gestionar tu restaurante
-          </p>
+          <p className="text-center text-gray-600 mb-8">Accede a tu cuenta</p>
 
           {/* Contenedor blanco con borde coral */}
           <div className="bg-white py-8 px-6 shadow-xl rounded-2xl sm:px-10 border border-gray-200 relative overflow-visible">
